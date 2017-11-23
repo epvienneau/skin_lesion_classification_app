@@ -11,5 +11,3 @@ dependencies:
         - ipython   
         - flask
         - scikit-image
-        - openCV
-        - pil
