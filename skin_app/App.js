@@ -4,7 +4,6 @@ import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert } 
 export default class App extends Component {
   _on_press_enter(){
       Alert.alert('Entering...!')
-      this.
   }
   _on_press_profile(){
       Alert.alert('Sorry, VIP only...!')
