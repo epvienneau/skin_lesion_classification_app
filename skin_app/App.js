@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert } from 'react-native';
+import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, ScrollView } from 'react-native';
+
 
 export default class App extends Component {
   _on_press_enter(){
@@ -8,30 +9,30 @@ export default class App extends Component {
   _on_press_profile(){
       Alert.alert('Sorry, VIP only...!')
   }
+
     constructor(props) {
         super(props);
-        this.state = {text: ''}
+        this.state = {username: ''}
       }
   render() {
     let pic = {
-      uri: 'https://image.freepik.com/free-icon/health-care_318-134428.jpg'
+      uri: 'http://aspirehealthkc.com/wp-content/uploads/2017/05/health_on_the_net.jpg'
     };
-
     return (
-      <View style={{padding: 70}}>
+      <ScrollView style={{padding: 70}}>
           <Text style={styles.titleText}> Skin Classification App</Text>
-        <Text>Log In:</Text>
+        <Text style={{fontSize: 20, fontFamily: 'Verdana'}}>Log In:</Text>
         <TextInput
           style={{height: 50}}
           placeholder="Username"
           onChangeText={(text) => this.setState({text})}
         />
-          <TextInput
+          <TextInput secureTextEntry={true}
           style={{height: 50}}
           placeholder="Password"
           onChangeText={(text) => this.setState({text})}
         />
-          <Button
+          <Button style={{alignItems: 'left'}}
               onPress = {this._on_press_enter}
               title="Enter"
            />
@@ -39,7 +40,8 @@ export default class App extends Component {
               onPress = {this._on_press_profile}
               title="Create New Profile"
            />
-      </View>
+          <Image source={pic} style={{width: 650, height: 500}} />
+      </ScrollView>
     );
   }
 }
