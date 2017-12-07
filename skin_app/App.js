@@ -8,8 +8,8 @@ import CreateProfile from "./modules/CreateProfile";
 import EditProfile from "./modules/EditProfile";
 
 const App = StackNavigator({
-        StartScreen: { screen: StartScreen },
         HomeScreen: { screen: HomeScreen },
+        StartScreen: { screen: StartScreen },
         CreateProfile: { screen: CreateProfile},
         EditProfile: { screen: EditProfile},
 },

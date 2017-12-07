@@ -16,7 +16,7 @@ export default class StartScreen extends Component {
       }
   render() {
       const { navigate } = this.props.navigation;
-    let pic = {
+    let logo = {
       uri: 'http://aspirehealthkc.com/wp-content/uploads/2017/05/health_on_the_net.jpg'
     };
     return (
@@ -43,7 +43,7 @@ export default class StartScreen extends Component {
               title="Create New Profile"
            />
 
-          <Image source={pic} style={{width: 650, height: 500}} />
+          <Image source={logo} style={{width: 650, height: 500}} />
       </ScrollView>
     );
   }
