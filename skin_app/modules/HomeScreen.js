@@ -2,51 +2,23 @@ import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, ScrollView } from 'react-native';
 
 
-export default class HomeScreen extends Component {
-  _on_press_enter(){
-      Alert.alert('Entering...!')
-  }
-  _on_press_profile(){
-      Alert.alert('Sorry, VIP only...!')
-  }
+export default class Profile extends Component {
+    render() {
+        const { navigate } = this.props.navigation;
+        return(
+            <ScrollView style={{padding: 70}}>
+            <Button title="Return Home"
+                    onPress={() => navigate('StartScreen')}
+            />
 
-    constructor(props) {
-        super(props);
-        this.state = {username: ''}
-      }
-  render() {
-      const { navigate } = this.props.navigation;
-    let pic = {
-      uri: 'http://aspirehealthkc.com/wp-content/uploads/2017/05/health_on_the_net.jpg'
-    };
-    return (
-      <ScrollView style={{padding: 70}}>
-          <Text style={styles.titleText}> Skin Classification App</Text>
-        <Text style={{fontSize: 20, fontFamily: 'Verdana'}}>Log In:</Text>
-        <TextInput
-          style={{height: 50}}
-          placeholder="Username"
-          onChangeText={(text) => this.setState({text})}
-        />
-          <TextInput secureTextEntry={true}
-          style={{height: 50}}
-          placeholder="Password"
-          onChangeText={(text) => this.setState({text})}
-        />
+            <Text style={styles.titleText}> User Profile Page</Text>
+            <Button title="Edit Profile"
+                    onPress={() => navigate('EditProfile')}
+            />
+            </ScrollView>
+        );
 
-          <Button
-              onPress = {() => navigate('Profile')}
-              title="Enter"
-           />
-          <Button
-              onPress = {this._on_press_profile}
-              title="Create New Profile"
-           />
-
-          <Image source={pic} style={{width: 650, height: 500}} />
-      </ScrollView>
-    );
-  }
+    }
 }
 
 const styles = StyleSheet.create({

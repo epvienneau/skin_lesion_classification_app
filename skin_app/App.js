@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { AppRegistry,View,Text,StyleSheet,ScrollView,TouchableOpacity } from 'react-native';
 import { StackNavigator,DrawerNavigator  } from 'react-navigation';
 
+import StartScreen from './modules/StartScreen';
 import HomeScreen from './modules/HomeScreen';
-import Profile from './modules/Profile';
+import CreateProfile from "./modules/CreateProfile";
+import EditProfile from "./modules/EditProfile";
 
 const App = StackNavigator({
-        Home: { screen: HomeScreen },
-        Profile: { screen: Profile },
+        StartScreen: { screen: StartScreen },
+        HomeScreen: { screen: HomeScreen },
+        CreateProfile: { screen: CreateProfile},
+        EditProfile: { screen: EditProfile},
 },
     );
 

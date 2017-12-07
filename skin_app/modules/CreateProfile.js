@@ -99,7 +99,7 @@ function checkPwords(pw,confirmer){
 	if (confirmer == pw){
 		alert('Account Created!','Please log in','Ok')}
 	else{
-		alert('Invalid Confirmation','Please make sure your passwords match','Ok')}		
+		alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
 }
 const styles = StyleSheet.create({
   baseText: {
