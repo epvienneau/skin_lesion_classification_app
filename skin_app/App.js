@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import CreateProfile from './CreateProfile.js'
-import EditProfile from './EditProfile.js'
-export default class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <EditProfile />
-      </View>
-    );
-  }
-}
+import { AppRegistry,View,Text,StyleSheet,ScrollView,TouchableOpacity } from 'react-native';
+import { StackNavigator,DrawerNavigator  } from 'react-navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+import StartScreen from './modules/StartScreen';
+import HomeScreen from './modules/HomeScreen';
+import CreateProfile from "./modules/CreateProfile";
+import EditProfile from "./modules/EditProfile";
+
+const App = StackNavigator({
+        StartScreen: { screen: StartScreen },
+        HomeScreen: { screen: HomeScreen },
+        CreateProfile: { screen: CreateProfile},
+        EditProfile: { screen: EditProfile},
+},
+);
+export default App;

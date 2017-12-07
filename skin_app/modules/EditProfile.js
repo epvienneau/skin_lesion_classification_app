@@ -11,6 +11,7 @@ constructor(){
 }
 
 render(){
+    const { navigate } = this.props.navigation;
         return(
                 <ScrollView>
                         <Text style={styles.titleText}> Edit Profile  </Text>
@@ -92,7 +93,7 @@ render(){
                          leftText={'Would you like to recieve emails?'}
                         />
                         <Button
-                         onPress={()=>checkPwords(this.state.password,this.state.confpassword)}
+                         onPress={()=>checkPwords(this.state.password,this.state.confpassword, navigate)}
                          title="Edit Profile"
                         />
                 </ScrollView>
@@ -100,9 +101,11 @@ render(){
 }
 }
 // Works on both iOS and Android
-function checkPwords(pw,confirmer){
+function checkPwords(pw,confirmer, navigate){
         if (confirmer == pw){
-                alert('Profile Edited!','Please log in','Ok')}
+                alert('Profile Edited!','Please log in','Ok')
+                navigate('HomeScreen')
+        }
         else{
                 alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
 }
