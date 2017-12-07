@@ -1,4 +1,9 @@
-export default class CreateProfile extends Component{
+import React, { Component } from 'react';
+import { AppRegistry, Text, TextInput, ScrollView, StyleSheet, Picker, Button, Alert } from 'react-native';
+import DatePicker from 'react-native-datepicker';
+import CheckBox from 'react-native-check-box';
+
+export default class EditProfile extends Component{
 constructor(){
         super();
         this.state = { username: '', password:'', confpassword:'', email:'',bday:"2018-01-01",phistory: false, fhistory:false, sex: 'Select Sex at Birth', emailpref:false, existing:false };
@@ -8,7 +13,7 @@ constructor(){
 render(){
         return(
                 <ScrollView>
-                        <Text style={styles.titleText}> Create New Profile  </Text>
+                        <Text style={styles.titleText}> Edit Profile  </Text>
 			<Text> Edit Username </Text>
                          <TextInput
                                 style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
@@ -97,7 +102,7 @@ render(){
 // Works on both iOS and Android
 function checkPwords(pw,confirmer){
         if (confirmer == pw){
-                alert('Account Created!','Please log in','Ok')}
+                alert('Profile Edited!','Please log in','Ok')}
         else{
                 alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
 }
