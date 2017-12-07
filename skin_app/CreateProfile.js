@@ -1,35 +1,40 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, TextInput, View, StyleSheet, Picker, Button } from 'react-native';
+import { AppRegistry, Text, TextInput, ScrollView, StyleSheet, Picker, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import CheckBox from 'react-native-check-box'; 
 export default class CreateProfile extends Component{
 constructor(){
 	super();
-	this.state = { username: 'Username', password:'Password', confpassword:'Confirm Password', email:'Email',bday:"2018-01-01",phistory: false, fhistory:false, sex: 'Select Sex at Birth', emailpref:false, existing:false };
+	this.state = { username: '', password:'', confpassword:'', email:'',bday:"2018-01-01",phistory: false, fhistory:false, sex: 'Select Sex at Birth', emailpref:false, existing:false };
+	this.JSONformat = {"username": this.state.username,"password":this.state.password};
 }
 
 render(){
 	return(
-		<View>
+		<ScrollView>
 			<Text style={styles.titleText}> Create New Profile  </Text>
 			 <TextInput
-        			style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-        			onChangeText={(text) => this.setState({username})}
-       				value={this.state.username}
+        			style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
+        			onChangeText={(text) => this.setState({username:text})}
+       				placeholder={'Username'}
+				value={this.state.username}
       			/>
 			<TextInput
-                                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                                onChangeText={(text) => this.setState({password})}
-                                value={this.state.password}
+                                style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
+                                onChangeText={(text) => this.setState({password:text})}
+                                placeholder = {'Password'}
+				value={this.state.password}
                         />
 			<TextInput
-                                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                                onChangeText={(text) => this.setState({confpassword})}
-                                value={this.state.confpassword}
+                                style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
+                                onChangeText={(text) =>{ this.setState({confpassword:text})}}
+                                placeholder = {'Confirm Password'}
+				value={this.state.confpassword}
                         />
 			<TextInput
-                                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                                onChangeText={(text) => this.setState({email})}
+                                style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
+                                placehodler = {'Email'}
+				onChangeText={(text) => this.setState({email:text})}
                                 value={this.state.email}
                         />
 			 <DatePicker
@@ -81,11 +86,20 @@ render(){
                          isChecked={false}
                          leftText={'Would you like to recieve emails?'}
                         />
-			
-		</View>
+			<Button
+			 onPress={()=>checkPwords(this.state.password,this.state.confpassword)}
+ 			 title="CreateProfile"
+			/>
+		</ScrollView>
 )
+} 
 }
-
+// Works on both iOS and Android
+function checkPwords(pw,confirmer){
+	if (confirmer == pw){
+		alert('Account Created!','Please log in','Ok')}
+	else{
+		alert('Invalid Confirmation','Please make sure your passwords match','Ok')}		
 }
 const styles = StyleSheet.create({
   baseText: {
@@ -94,6 +108,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
+    margin: 30
   },
-}); 
+});
 
