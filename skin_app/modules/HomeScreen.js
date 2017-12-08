@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, ScrollView, TouchableHighlight } from 'react-native';
-
+import axios from 'axios';
 
 export default class Profile extends Component {
+    constructor(){
+        super();
+        this.state = {
+            'count': 0
+        };
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+
         let im = {
             uri: "http://s4.thingpic.com/images/qX/PeLog95AZW23TJ28zWNvJe8H.jpeg"
         };
+
+        var api =  this.props.screenProps.api;
+
         return(
             <ScrollView style={{padding: 70}}>
 
@@ -21,20 +32,34 @@ export default class Profile extends Component {
                     </TouchableHighlight>
                     <Text>Date Captured:</Text>
                     <Text>User Defined Tag:</Text>
+                    <Text> {5} </Text>
                 </View>
                 <Button title = "Upload New Image"
                     onPress={() => Alert.alert('Navigating to Upload Image Screen')}
                 />
                 <Button title="Edit Profile"
-                    onPress={() => navigate('EditProfile')}
+                    onPress={() => navigate('EditProfile', {api: api})}
                 />
                 <Button title="Log Out"
-                    onPress={() => navigate('StartScreen')}
+                    onPress={() => navigate('StartScreen', {api: api})}
+                />
+                <Button title="Print in Console"
+                    onPress={() => this.getRepos(api)}
                 />
             </ScrollView>
         );
 
     }
+
+    getRepos(api){
+    api.get()
+        .then((data) => {
+        this.setState({'count': data.data},
+            () => console.log(this.state.count))
+    });
+
+  //return 6;
+}
 }
 
 const styles = StyleSheet.create({
@@ -59,3 +84,4 @@ const styles = StyleSheet.create({
       width: 200,
   }
 });
+

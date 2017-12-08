@@ -14,11 +14,16 @@ export default class StartScreen extends Component {
         super(props);
         this.state = {username: ''}
       }
+
   render() {
-      const { navigate } = this.props.navigation;
+    const { navigate } = this.props.navigation;
+
     let logo = {
       uri: 'http://aspirehealthkc.com/wp-content/uploads/2017/05/health_on_the_net.jpg'
     };
+
+    var api =  this.props.screenProps.api;
+
     return (
       <ScrollView style={{padding: 70}}>
           <Text style={styles.titleText}> Skin Classification App</Text>

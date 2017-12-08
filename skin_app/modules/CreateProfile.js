@@ -11,6 +11,7 @@ constructor(){
 
 render(){
 	const { navigate } = this.props.navigation;
+	var api =  this.props.screenProps.api;
 	return(
 		<ScrollView>
 			<Text style={styles.titleText}> Create New Profile  </Text>
