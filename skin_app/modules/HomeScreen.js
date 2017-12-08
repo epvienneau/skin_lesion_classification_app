@@ -32,7 +32,6 @@ export default class Profile extends Component {
                     </TouchableHighlight>
                     <Text>Date Captured:</Text>
                     <Text>User Defined Tag:</Text>
-                    <Text> {5} </Text>
                 </View>
                 <Button title = "Upload New Image"
                     onPress={() => Alert.alert('Navigating to Upload Image Screen')}
@@ -43,7 +42,7 @@ export default class Profile extends Component {
                 <Button title="Log Out"
                     onPress={() => navigate('StartScreen', {api: api})}
                 />
-                <Button title="Print in Console"
+                <Button title="Print in Console"//For now it's just testing API, you should get a request counter
                     onPress={() => this.getRepos(api)}
                 />
             </ScrollView>

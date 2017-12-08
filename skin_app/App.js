@@ -12,8 +12,8 @@ var api = axios.create({
     });
 
 const AppNavigator = StackNavigator({
-        HomeScreen: { screen: HomeScreen },
         StartScreen: { screen: StartScreen },
+        HomeScreen: { screen: HomeScreen },
         CreateProfile: { screen: CreateProfile},
         EditProfile: { screen: EditProfile},
 },
