@@ -32,15 +32,16 @@ export default class Profile extends Component {
                     </TouchableHighlight>
                     <Text>Date Captured:</Text>
                     <Text>User Defined Tag:</Text>
+                    <Text>{this.state.count}</Text>
                 </View>
                 <Button title = "Upload New Image"
                     onPress={() => Alert.alert('Navigating to Upload Image Screen')}
                 />
                 <Button title="Edit Profile"
-                    onPress={() => navigate('EditProfile', {api: api})}
+                    onPress={() => navigate('EditProfile')}
                 />
                 <Button title="Log Out"
-                    onPress={() => navigate('StartScreen', {api: api})}
+                    onPress={() => navigate('StartScreen')}
                 />
                 <Button title="Print in Console"//For now it's just testing API, you should get a request counter
                     onPress={() => this.getRepos(api)}
