@@ -7,6 +7,7 @@ import HomeScreen from './modules/HomeScreen';
 import CreateProfile from './modules/CreateProfile';
 import EditProfile from './modules/EditProfile';
 import Upload from './modules/Upload';
+import PredictionResults from './modules/PredictionResults';
 
 var api = axios.create({
     baseURL:'http://192.168.0.5:5000'
@@ -18,6 +19,7 @@ const AppNavigator = StackNavigator({
         CreateProfile: { screen: CreateProfile},
         EditProfile: { screen: EditProfile},
 	Upload: { screen: Upload},
+	PredictionResults: { screen: PredictionResults},
 	},
     );
 
