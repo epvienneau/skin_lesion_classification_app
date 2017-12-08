@@ -34,7 +34,7 @@ export default class Profile extends Component {
                     <Text>User Defined Tag:</Text>
                 </View>
                 <Button title = "Upload New Image"
-                    onPress={() => Alert.alert('Navigating to Upload Image Screen')}
+                    onPress={() => navigate('Upload', {api: api})}
                 />
                 <Button title="Edit Profile"
                     onPress={() => navigate('EditProfile', {api: api})}
