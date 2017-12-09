@@ -26,6 +26,7 @@
     "react-native-check-box": "^2.0.2",
     "react-native-checkbox": "^2.0.0",
     "react-native-datepicker": "^1.6.0",
+    "react-native-photo-upload": "^1.1.1",
     "react-navigation": "^1.0.0-beta.21",
     "react-password-mask": "^3.2.0"
   }
