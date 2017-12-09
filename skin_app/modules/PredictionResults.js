@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 import { Image, TouchableHighlight, Picker,  TextInput, ScrollView, StyleSheet, Text, View, Button} from 'react-native';
 import axios from 'axios'
+{/*import get_prediction from ../../bme590_melanoma_detection/get_prediction.py*/}
 
 export default class PredictionResults extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {diam: 5, pred: 'Malignant', trueDiag: 'Unknown', date: '2017-12-08', tag: 'mole on chest'};
+    axios.get('/display_thumbnail/1')
+      .then(response => {
+          this.setState({
+	    image: response.data.image,
+	    date: response.data.date,
+	    tag: response.data.tag,
+	    diam: response.data.diam,
+	    pred: response.data.pred,
+	    trueDiag: response.data.trueDiag,
+	  })
+        })
   }
   render(){
     const { navigate } = this.props.navigation;
     var api = this.props.screenProps.api;
     var predTextColor = 'green';
-    let im = {uri: "https://www.healthline.com/hlcmsresource/images/Image-Galleries/melanoma/662-Melanoma_Pictures-642x361-Slide2.jpg"};
+    let im = {uri: "https://www.healthline.com/hlcmsresource/images/Image-Galleries/melanoma/662-Melanoma_Pictures-642x361-Slide2.jpg"};  
     if (this.state.pred === 'Malignant'){predTextColor = 'red'}
     return(
       <ScrollView style={{padding: 70}}>
@@ -23,7 +34,7 @@ export default class PredictionResults extends React.Component {
 	<Text style={{fontFamily: 'Baskerville', fontSize: 20, color: predTextColor}}> {this.state.pred} </Text>
 	<View style = {styles.thumbnail}>
 	  <TouchableHighlight>
-	    <Image source={im} style={{width: 100, height: 100}}/>
+	    <Image source={im} style={{width: 250, height: 150}}/>
 	  </TouchableHighlight>
 	<Text> Date Captured: {this.state.date}</Text>
 	<Text> User-Defined Tag: {this.state.tag}</Text> 
