@@ -6,7 +6,11 @@ import axios from 'axios'
 export default class Upload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {date: '', tag: '', diam: ''}
+    this.state = {image: '', date: '', tag: '', diam: ''}
+  }
+  pressUploadButton = () => {
+    axios.post('/upload_image', {image: image, date: date, tag: tag, diam: diam})
+    navigate('PredictionResults')
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -15,14 +19,14 @@ export default class Upload extends React.Component {
       <ScrollView style={{padding: 70}}>	    
       <View>
           <Button
-            onPress = {() => navigate('HomeScreen', {api: api})}
+            onPress = {() => navigate('HomeScreen')}
             title="Home"
           />
 	</View>
 	<Text style={styles.titleText}> Upload Image</Text>
 	<View>
             <Button 
-	    onPress = {() => navigate('PredictionResults', {api: api})}
+	    onPress = {() => this.pressUplodButton()}
 	    title="Upload!"
   	    />
         </View>

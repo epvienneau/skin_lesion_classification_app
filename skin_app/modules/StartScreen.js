@@ -12,7 +12,7 @@ export default class StartScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {username: ''}
+        this.state = {username: '', password: ''}
       }
 
   render() {
@@ -31,12 +31,12 @@ export default class StartScreen extends Component {
         <TextInput
           style={{height: 50}}
           placeholder="Username"
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({username: text})}
         />
           <TextInput secureTextEntry={true}
           style={{height: 50}}
           placeholder="Password"
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({password: text})}
         />
 
           <Button

@@ -5,9 +5,15 @@ import axios from 'axios';
 export default class Profile extends Component {
     constructor(){
         super();
-        this.state = {
-            'count': 0
-        };
+	axios.get('/display_thumbnail/0')
+		.then(response => {
+			this.setState({
+				image: response.data.image,
+				date: response.data.date,
+				tag: response.data.tag,
+			})
+		})
+        this.setState({count: 0})
     }
 
     render() {
@@ -34,13 +40,13 @@ export default class Profile extends Component {
                     <Text>User Defined Tag:</Text>
                 </View>
                 <Button title = "Upload New Image"
-                    onPress={() => navigate('Upload', {api: api})}
+                    onPress={() => navigate('Upload')}
                 />
                 <Button title="Edit Profile"
-                    onPress={() => navigate('EditProfile', {api: api})}
+                    onPress={() => navigate('EditProfile')}
                 />
                 <Button title="Log Out"
-                    onPress={() => navigate('StartScreen', {api: api})}
+                    onPress={() => navigate('StartScreen')}
                 />
                 <Button title="Print in Console"//For now it's just testing API, you should get a request counter
                     onPress={() => this.getRepos(api)}
@@ -53,7 +59,7 @@ export default class Profile extends Component {
     getRepos(api){
     api.get()
         .then((data) => {
-        this.setState({'count': data.data},
+        this.setState({count: data.data},
             () => console.log(this.state.count))
     });
 

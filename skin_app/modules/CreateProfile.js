@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, ScrollView, StyleSheet, Picker, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
-import CheckBox from 'react-native-check-box'; 
+import CheckBox from 'react-native-check-box';
+import axios from 'axios'
+
 export default class CreateProfile extends Component{
 constructor(){
 	super();
@@ -100,6 +102,16 @@ render(){
 function checkPwords(pw,confirmer, navigate){
 	if (confirmer == pw){
 		alert('Account Created!','Please log in','Ok')
+		axios.post('/create_new_profile', {
+		  username: {this.state.username},
+		  password: {this.state.password},
+		  email: {this.state.email},
+		  bday: {this.state.bday},
+		  phistory: {this.state.phistory},
+ 		  fhistory: {this.state.fhistory},
+		  sex: {this.state.sex}, 
+		  emailpref: {this.state.emailpref},
+		})
 		navigate('HomeScreen')}
 	else{
 		alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
