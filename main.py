@@ -17,8 +17,8 @@ def requests():
     resp = jsonify(count_requests)
     return resp
 
-@app.route('/login', methods=['GET'])
-def login(username):
+@app.route('/login/<uuid>', methods=['GET'])
+def login(uuid):
     """
 
     Retrieves password for given username
@@ -39,7 +39,7 @@ def create_new_profile():
     resp = null //this is where DB needs to be accessed...
     return resp
 
-@app.route('/update_profile', methods=['POST'])
+@app.route('/update_profile/<uuid>', methods=['POST'])
 def update_profile(uuid):
     """
 
@@ -50,7 +50,7 @@ def update_profile(uuid):
     resp = null //this is where DB needs to be accessed...
     return resp
 
-@app.route('/display_thumbnail', methods=['POST'])
+@app.route('/display_thumbnail/<verbose>', methods=['POST'])
 def display_thumbnail(verbose):
     """
     
@@ -72,7 +72,7 @@ def upload_image():
     resp = null //this is where DB needs to be accessed...
     return resp
 
-@app.route('/get_user_data', methods=['POST']))
+@app.route('/get_user_data/<uuid>', methods=['POST']))
 def get_user_data(uuid):
     """
 
