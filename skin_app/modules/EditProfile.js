@@ -2,11 +2,25 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, ScrollView, StyleSheet, Picker, Button, Alert } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import CheckBox from 'react-native-check-box';
+import axios from 'axios'
 
 export default class EditProfile extends Component{
-constructor(){
-        super();
-        this.state = { username: '', password:'', confpassword:'', email:'',bday:"2018-01-01",phistory: false, fhistory:false, sex: 'Select Sex at Birth', emailpref:false, existing:false };
+constructor(props){
+        super(props);
+	axios.get('/update_profile/uuid')
+	  .then(response => {
+	    this.setState({
+	      username: response.data.username,
+	      password: response.data.password,
+	      email: response.data.email,
+	      bday: response.data.bday,
+	      phistory: response.data.phistory,
+	      fhistory: response.data.fhistory,
+	      sex: response.data.sex,
+	      emailpref: response.data.emailpref
+	    })
+	  })
+	this.setState({confpassword: '', existing: false})
         this.JSONformat = {"username": this.state.username,"password":this.state.password};
 }
 
@@ -105,7 +119,17 @@ render(){
 function checkPwords(pw,confirmer, navigate){
         if (confirmer == pw){
                 alert('Profile Edited!','Please log in','Ok')
-                navigate('HomeScreen')
+                axios.post('/update_profile/uuid', {
+			username: {this.state.username},
+			password: {this.state.password},
+			email: {this.state.email},
+			bday: {this.state.bday},
+			phistory: {this.state.phistory},
+			fhistory: {this.state.fhistory},
+			sex: {this.state.sex}
+			emailpref: {this.state.emailpref},
+		})
+		navigate('HomeScreen')
         }
         else{
                 alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
