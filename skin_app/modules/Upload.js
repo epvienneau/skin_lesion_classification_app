@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TextInput, ScrollView, StyleSheet, Text, View, Button } from 'react-native';
+import { TextInput, ScrollView, StyleSheet, Text, View, Button, ImagePickerIOS, Image } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import axios from 'axios'
 
@@ -9,8 +9,10 @@ export default class Upload extends React.Component {
     this.state = {image: '', date: '', tag: '', diam: ''}
   }
   pressUploadButton = () => {
-    axios.post('/upload_image', {image: image, date: date, tag: tag, diam: diam})
-    navigate('PredictionResults')
+    // openSelectDialog(config, successCallback, errorCallback);
+    axios.post('/upload_image', {image: this.state.image, date: this.state.date, tag: this.state.tag, diam: this.state.diam}).then(
+	var response = response.data).then(
+	    navigate('PredictionResults',{labels:response['label'] , predictions: response['predictions']))
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -24,6 +26,10 @@ export default class Upload extends React.Component {
           />
 	</View>
 	<Text style={styles.titleText}> Upload Image</Text>
+	 ImagePickerIOS.openSelectDialog({}, imageUri => {
+      	  this.setState({ image: imageUri });
+    	  }, error => console.error(error));
+  	 }
 	<View>
             <Button 
 	    onPress = {() => this.pressUplodButton()}
