@@ -4,16 +4,17 @@ import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, S
 
 export default class StartScreen extends Component {
   _on_press_enter(){
-      Alert.alert('Entering...!')
+      Alert.alert('Entering...!');
   }
   _on_press_profile(){
-      Alert.alert('Sorry, VIP only...!')
+      Alert.alert('Sorry, VIP only...!');
   }
 
-    constructor(props) {
-        super(props);
-        this.state = {username: ''}
-      }
+constructor(props) {
+    super(props);
+    this.state = {username: ''};
+    this.state = {password: ''};
+  }
 
   render() {
     const { navigate } = this.props.navigation;
@@ -31,16 +32,20 @@ export default class StartScreen extends Component {
         <TextInput
           style={{height: 50}}
           placeholder="Username"
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({username: text},
+              () => console.log(this.state.username))}
         />
           <TextInput secureTextEntry={true}
           style={{height: 50}}
           placeholder="Password"
-          onChangeText={(text) => this.setState({text})}
+          onChangeText={(text) => this.setState({password: text},
+              () => console.log(this.state.password))}
         />
-
+        <Text style={{fontSize: 10, fontFamily: 'Verdana', color: 'red'}}>
+            {this.state.valid}
+        </Text>
           <Button
-              onPress = {() => navigate('HomeScreen')}
+              onPress = {() => checklogin(this.state.username, this.state.password, api, navigate, this)}
               title="Enter"
            />
           <Button
@@ -52,6 +57,32 @@ export default class StartScreen extends Component {
       </ScrollView>
     );
   }
+}
+
+function checklogin(username, password, api, navigate, Screen){
+    //api.post('/checklogin', {"username": username,
+    //"password": password})
+    //    .then
+    if (username != undefined)
+    {
+        api.post('/checklogin', {
+            username: username,
+            password: password,
+        })
+            .then((data) => {
+                Screen.setState({valid: data.data},
+                    () => console.log(Screen.state.valid),
+                )
+            })
+            .then(() => {
+                if (Screen.state.valid == 'YES') {
+                    navigate('HomeScreen')
+                }
+            })
+    }
+    else{
+        Screen.setState({valid: 'Please input a username'})
+    }
 }
 
 const styles = StyleSheet.create({
