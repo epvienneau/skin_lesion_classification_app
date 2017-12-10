@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 import numpy as np
+from return_response import response //linked this to what will call suyashs stuff
 
 app = Flask(__name__)
 
@@ -69,7 +70,10 @@ def upload_image():
 
     return: resp: (json) image, date captured, tag, diameter
     """
-    resp = null //this is where DB needs to be accessed...
+// I added stuff here please take a look
+    req = request.JSON //get the JSON stuff
+    image = req['image'] //get the actual image data out
+    resp = response(image)  //this is where we call the code that suyash wrote
     return resp
 
 @app.route('/get_user_data/<uuid>', methods=['POST']))
