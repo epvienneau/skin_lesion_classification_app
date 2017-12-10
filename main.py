@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:avalanche40@35.192.150.130/skin_learn'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:mypassword@35.227.93.161/skin_app'
 db = SQLAlchemy(app)
 count_requests = 0
 
@@ -36,6 +36,11 @@ def requests():
 
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
+    '''
+    Returns string that will get assigned to variable 'valid' in react code
+
+    :return: String
+    '''
     username = request.json['username']
     password = request.json['password']
 
