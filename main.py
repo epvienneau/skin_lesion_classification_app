@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import json
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -64,3 +65,10 @@ def checklogin():
         print(User.query.filter_by(username=username).first().password)
         return 'Wrong Password'
     return 'YES'
+
+@app.route('/getImages/<username>', methods = ['GET'])
+def get_images(username):
+    resp = []
+    for image in ImPath.query.filter_by(username=username):
+        resp.append(image.impath)
+    return json.dumps(resp)
