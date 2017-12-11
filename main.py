@@ -72,3 +72,7 @@ def get_images(username):
     for image in ImPath.query.filter_by(username=username):
         resp.append(image.impath)
     return json.dumps(resp)
+
+@app.route('/prediction', methiods = ['POST'])
+def prediction():
+    return 'Hi'
