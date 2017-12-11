@@ -22,7 +22,9 @@ export default class Profile extends Component {
         return(
             <ScrollView style={{padding: 70}}>
 
-                <Text style={styles.titleText}> Home</Text>
+                <Text style={styles.titleText}>Welcome
+                    {' ' + this.props.navigation.state.params.username}!
+                </Text>
                 <Text style={styles.baseText}> Upload History</Text>
                 <View style = {styles.thumbnail}>
                     <TouchableHighlight

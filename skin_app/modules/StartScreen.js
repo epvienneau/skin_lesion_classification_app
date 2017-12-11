@@ -75,7 +75,7 @@ function checklogin(api, navigate, Screen){
             })
             .then(() => {
                 if (Screen.state.valid == 'YES') {
-                    navigate('HomeScreen')
+                    navigate('HomeScreen', {username: Screen.state.username})
                 }
             })
     }
