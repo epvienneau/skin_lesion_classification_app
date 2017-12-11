@@ -23,7 +23,7 @@ const AppNavigator = StackNavigator({
 	},
     );
 
-class MyApp extends Component {
+class App extends Component {
   render() {
     return (
       <AppNavigator screenProps={{api: api}} />
@@ -31,4 +31,4 @@ class MyApp extends Component {
   }
 }
 
-export default MyApp;
+export default App;
