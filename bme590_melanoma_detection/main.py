@@ -73,6 +73,6 @@ def get_images(username):
         resp.append(image.impath)
     return json.dumps(resp)
 
-@app.route('/prediction', methiods = ['POST'])
+@app.route('/prediction', methods = ['POST'])
 def prediction():
     return 'Hi'
