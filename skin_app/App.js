@@ -10,7 +10,7 @@ import Upload from './modules/Upload';
 import PredictionResults from './modules/PredictionResults';
 
 var api = axios.create({
-    baseURL:'http://192.168.0.5:5000'
+    baseURL:'http://10.197.81.202:8000'
     });
 
 const AppNavigator = StackNavigator({
