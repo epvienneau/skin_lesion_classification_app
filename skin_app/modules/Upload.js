@@ -15,7 +15,7 @@ export default class Upload extends React.Component {
       <ScrollView style={{padding: 70}}>	    
       <View>
           <Button
-            onPress = {() => navigate('HomeScreen', {api: api})}
+            onPress = {() => navigate('HomeScreen')}
             title="Home"
           />
 	</View>

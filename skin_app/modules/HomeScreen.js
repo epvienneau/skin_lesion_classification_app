@@ -14,19 +14,38 @@ export default class Profile extends Component {
     render() {
         const { navigate } = this.props.navigation;
 
-        let im = {
+        let im = [{
             uri: "http://s4.thingpic.com/images/qX/PeLog95AZW23TJ28zWNvJe8H.jpeg"
-        };
+        }, {
+            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQzfr1g1NVTaF6Supekx4E38lieCPrVbknP_Y7aSuv9DEKaApv"
+        }, {
+            uri: "http://i.dailymail.co.uk/i/pix/2017/06/27/23/41D1F84200000578-4645232-image-a-59_1498604398087.jpg"
+        }];
+
 
         var api =  this.props.screenProps.api;
 
         try {
             var username = this.props.navigation.state.params.username;
-            console.log('Hi');
         }
         catch(err){
             username = 'User';
-            console.log('Bye');
+        }
+
+        var photoHolder = [];
+        for(var i=0;i<im.length;i++){
+            photoHolder.push(
+            <View style={styles.thumbnail} key={i}>
+                <TouchableHighlight
+                    onPress={() => Alert.alert('Navigating to PredictionResults')}
+                >
+                    <Image source={im[i]} style={{width: 100, height: 100}}/>
+                </TouchableHighlight>
+                <Text>Date Captured:</Text>
+                <Text>User Defined Tag:</Text>
+                <Text>{this.state.count}</Text>
+            </View>
+            )
         }
         return(
             <ScrollView style={{padding: 70}}>
@@ -35,16 +54,7 @@ export default class Profile extends Component {
                     {' ' + username}!
                 </Text>
                 <Text style={styles.baseText}> Upload History</Text>
-                <View style = {styles.thumbnail}>
-                    <TouchableHighlight
-                        onPress={() => Alert.alert('Navigating to PredictionResults')}
-                    >
-                        <Image source={im} style={{width: 100, height: 100}} />
-                    </TouchableHighlight>
-                    <Text>Date Captured:</Text>
-                    <Text>User Defined Tag:</Text>
-                    <Text>{this.state.count}</Text>
-                </View>
+                <View>{photoHolder}</View>
                 <Button title = "Upload New Image"
                     onPress={() => navigate('Upload', {api: api})}
                 />
