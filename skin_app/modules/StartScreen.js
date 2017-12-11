@@ -45,7 +45,7 @@ constructor(props) {
             {this.state.valid}
         </Text>
           <Button
-              onPress = {() => checklogin(this.state.username, this.state.password, api, navigate, this)}
+              onPress = {() => checklogin(api, navigate, this)}
               title="Enter"
            />
           <Button
@@ -59,15 +59,15 @@ constructor(props) {
   }
 }
 
-function checklogin(username, password, api, navigate, Screen){
+function checklogin(api, navigate, Screen){
     //api.post('/checklogin', {"username": username,
     //"password": password})
     //    .then
-    if (username != undefined)
+    if (Screen.state.username != undefined)
     {
         api.post('/checklogin', {
-            username: username,
-            password: password,
+            username: Screen.state.username,
+            password: Screen.state.password,
         })
             .then((data) => {
                 Screen.setState({valid: data.data},
