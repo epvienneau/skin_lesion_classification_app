@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, ScrollView, TouchableHighlight } from 'react-native';
 import axios from 'axios';
 
+
 export default class Profile extends Component {
     constructor(){
         super();
@@ -19,11 +20,19 @@ export default class Profile extends Component {
 
         var api =  this.props.screenProps.api;
 
+        try {
+            var username = this.props.navigation.state.params.username;
+            console.log('Hi');
+        }
+        catch(err){
+            username = 'User';
+            console.log('Bye');
+        }
         return(
             <ScrollView style={{padding: 70}}>
 
                 <Text style={styles.titleText}>Welcome
-                    {' ' + this.props.navigation.state.params.username}!
+                    {' ' + username}!
                 </Text>
                 <Text style={styles.baseText}> Upload History</Text>
                 <View style = {styles.thumbnail}>
