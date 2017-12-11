@@ -1,11 +1,17 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+<<<<<<< HEAD
 from flask_cors import CORS
+import numpy as np
 from datetime import datetime
 import json
+from ./get_prediction import get_prediction
+import matplotlib.pyplot.imread as imread
+import base64
 
 app = Flask(__name__)
 CORS(app)
+x
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:mypassword@35.227.93.161/skin_app'
 db = SQLAlchemy(app)
@@ -24,16 +30,18 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.username
 
+
 class ImPath(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=False, nullable=False)
     impath = db.Column(db.String(200), unique=True, nullable=False)
     date = db.Column(db.DateTime, unique=False, default=datetime.utcnow)
+    #tag = db.Column(db.String(200), unique=False, nullable=True)
+    #diam = db.Column(db.DECIMAL(4), unique=False, nullable=True)
 
     def __repr__(self):
         return '<Image %r>' % self.id
 
-#Create a table called users in case there isn't any
 db.create_all()
 
 @app.route('/', methods=['GET'])
@@ -50,11 +58,11 @@ def requests():
 
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
-    '''
+    """
     Returns string that will get assigned to variable 'valid' in react code
 
-    :return: String
-    '''
+    :return: (String) 'YES' if login credentials are valid
+    """
     username = request.json['username']
     password = request.json['password']
 
@@ -70,11 +78,67 @@ def checklogin():
 
 @app.route('/getImages/<username>', methods = ['GET'])
 def get_images(username):
+    """
+
+    Retrieves image history for given username
+
+    :return: resp: (json) All the pathways to the images the user has previously uploaded
+    """
     resp = []
     for image in ImPath.query.filter_by(username=username):
         resp.append(image.impath)
     return json.dumps(resp)
 
-@app.route('/prediction', methods = ['POST'])
-def prediction():
-    return 'Hi'
+
+
+@app.route('/create_new_profile', methods=['POST'])
+def create_new_profile():
+    """
+
+    Adds new user to DB
+
+    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
+    """
+    
+    return resp
+
+@app.route('/update_profile/<username>', methods=['POST'])
+def update_profile(username):
+    """
+
+    Updates profile of user associated with given username
+
+    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
+    """
+    
+
+@app.route('/display_thumbnail/<verbose>', methods=['POST'])
+def display_thumbnail(verbose):
+    """
+
+    Retrieves recent images and associated data for upload history or prediction results display
+
+    return: resp: (json) image, date capture, tag. If verbose = 1: result, true diagnosis, diameter are also returned. 
+    """
+
+@app.route('/prediction', methods=['POST'])
+def upload_image():
+    """
+
+    Sends image and associated data (tag, date, diameter) to DB 
+
+    return: resp: (json) 
+    """
+    req = request.json
+    image = req['image']
+    imgdata = base64.b64decode(image)
+    filename = 'some_image.jpg'
+    with open(filename, 'wb') as f:
+        f.write(imgdata)
+    image64 = imread('some_image.jpg')
+    resp = get_prediction(base64)
+    return resp
+
+def send_error(message, code): #Suyash error function
+    err = {"error": message,}
+    return jsonify(err), code
