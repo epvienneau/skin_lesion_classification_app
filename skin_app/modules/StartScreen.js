@@ -12,8 +12,7 @@ export default class StartScreen extends Component {
 
 constructor(props) {
     super(props);
-    this.state = {username: ''};
-    this.state = {password: ''};
+    this.state = {username: '', password: ''};
   }
 
   render() {
