@@ -1,17 +1,16 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
-<<<<<<< HEAD
 from flask_cors import CORS
 import numpy as np
 from datetime import datetime
 import json
-from ./get_prediction import get_prediction
-import matplotlib.pyplot.imread as imread
+from get_prediction import get_prediction
+import matplotlib.pyplot as mpl
 import base64
 
 app = Flask(__name__)
 CORS(app)
-x
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:mypassword@35.227.93.161/skin_app'
 db = SQLAlchemy(app)
@@ -127,17 +126,21 @@ def upload_image():
 
     Sends image and associated data (tag, date, diameter) to DB 
 
-    return: resp: (json) 
+    return: resp: (json)
     """
     req = request.json
-    image = req['image']
+    print(req['image'][23:30])
+    print(req['image'][-10:])
+    image = req['image'][23:]
     imgdata = base64.b64decode(image)
+    #print(imgdata)
     filename = 'some_image.jpg'
     with open(filename, 'wb') as f:
         f.write(imgdata)
-    image64 = imread('some_image.jpg')
-    resp = get_prediction(base64)
-    return resp
+    image64 = mpl.imread('some_image.jpg')
+    resp = get_prediction(image64)
+    dictout = {resp[0][0]:str(resp[1][0]),resp[0][1]:str(resp[1][1])}
+    return jsonify(dictout)
 
 def send_error(message, code): #Suyash error function
     err = {"error": message,}
