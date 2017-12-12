@@ -1,7 +1,12 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from datetime import datetime
+import json
+
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:mypassword@35.227.93.161/skin_app'
 db = SQLAlchemy(app)
@@ -15,9 +20,19 @@ class User(db.Model):
     family_history = db.Column(db.BOOLEAN, unique=False, nullable=False)
     gender = db.Column(db.String(6), unique=False, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    bday = db.Column(db.DateTime, unique=False, nullable=False)
 
     def __repr__(self):
         return '<User %r>' % self.username
+
+class ImPath(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=False, nullable=False)
+    impath = db.Column(db.String(200), unique=True, nullable=False)
+    date = db.Column(db.DateTime, unique=False, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '<Image %r>' % self.id
 
 #Create a table called users in case there isn't any
 db.create_all()
@@ -33,6 +48,7 @@ def requests():
     count_requests += 1
     resp = jsonify(count_requests)
     return resp
+
 
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
@@ -53,3 +69,14 @@ def checklogin():
         print(User.query.filter_by(username=username).first().password)
         return 'Wrong Password'
     return 'YES'
+
+@app.route('/getImages/<username>', methods = ['GET'])
+def get_images(username):
+    resp = []
+    for image in ImPath.query.filter_by(username=username):
+        resp.append(image.impath)
+    return json.dumps(resp)
+
+@app.route('/prediction', methiods = ['POST'])
+def prediction():
+    return 'Hi'

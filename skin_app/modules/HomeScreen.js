@@ -6,34 +6,49 @@ export default class Profile extends Component {
     constructor(){
         super();
         this.state = {
-            'count': 0
+            'count': 0,
+            'images': [],
         };
     }
 
     render() {
         const { navigate } = this.props.navigation;
 
-        let im = {
-            uri: "http://s4.thingpic.com/images/qX/PeLog95AZW23TJ28zWNvJe8H.jpeg"
-        };
 
         var api =  this.props.screenProps.api;
+
+        try {
+            var username = this.props.navigation.state.params.username;
+            //this.getRepos(api, username);
+        }
+        catch(err){
+            username = 'User';
+        }
+
+        var photoHolder = [];
+        for(var i=0;i<this.state.images.length;i++){
+            photoHolder.push(
+            <View style={styles.thumbnail} key={i}>
+                <TouchableHighlight
+                    onPress={() => navigate('PredictionResults')}
+                >
+                    <Image source={{uri: this.state.images[i]}} style={{width: 100, height: 100}}/>
+                </TouchableHighlight>
+                <Text>Date Captured:</Text>
+                <Text>User Defined Tag:</Text>
+                <Text>{i}</Text>
+            </View>
+            )
+        }
 
         return(
             <ScrollView style={{padding: 70}}>
 
-                <Text style={styles.titleText}> Home</Text>
+                <Text style={styles.titleText}>Welcome
+                    {' ' + username}!
+                </Text>
                 <Text style={styles.baseText}> Upload History</Text>
-                <View style = {styles.thumbnail}>
-                    <TouchableHighlight
-                        onPress={() => Alert.alert('Navigating to PredictionResults')}
-                    >
-                        <Image source={im} style={{width: 100, height: 100}} />
-                    </TouchableHighlight>
-                    <Text>Date Captured:</Text>
-                    <Text>User Defined Tag:</Text>
-                    <Text>{this.state.count}</Text>
-                </View>
+                <View>{photoHolder}</View>
                 <Button title = "Upload New Image"
                     onPress={() => navigate('Upload', {api: api})}
                 />
@@ -43,23 +58,20 @@ export default class Profile extends Component {
                 <Button title="Log Out"
                     onPress={() => navigate('StartScreen')}
                 />
-                <Button title="Print in Console"//For now it's just testing API, you should get a request counter
-                    onPress={() => this.getRepos(api)}
+                <Button title="Show History"//For now it's just testing API, you should get a request counter
+                    onPress={() => this.getRepos(api, username)}
                 />
             </ScrollView>
         );
 
     }
 
-    getRepos(api){
-    api.get()
-        .then((data) => {
-        this.setState({'count': data.data},
-            () => console.log(this.state.count))
-    });
-
+    getRepos(api, username){
+    api.get('/getImages/' + username)
+        .then((data) => {this.setState({images: data.data})})
+        .then(() => console.log(this.state.images));
   //return 6;
-}
+    }
 }
 
 const styles = StyleSheet.create({

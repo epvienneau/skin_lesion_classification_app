@@ -6,7 +6,7 @@ import axios from 'axios'
 export default class Upload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {date: '', tag: '', diam: ''}
+    this.state = {date: '', tag: '', diam: ''};
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -15,7 +15,7 @@ export default class Upload extends React.Component {
       <ScrollView style={{padding: 70}}>	    
       <View>
           <Button
-            onPress = {() => navigate('HomeScreen', {api: api})}
+            onPress = {() => navigate('HomeScreen')}
             title="Home"
           />
 	</View>

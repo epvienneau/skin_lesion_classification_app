@@ -10,7 +10,7 @@ import Upload from './modules/Upload';
 import PredictionResults from './modules/PredictionResults';
 
 var api = axios.create({
-    baseURL:'http://192.168.0.5:5000'
+    baseURL:'http://192.168.0.5:8000' //CHANGE TO YOUR OWN IP ADDRESS
     });
 
 const AppNavigator = StackNavigator({
@@ -20,13 +20,13 @@ const AppNavigator = StackNavigator({
         EditProfile: { screen: EditProfile},
 	Upload: { screen: Upload},
 	PredictionResults: { screen: PredictionResults},
-	},
-    );
+	}
+    )
 
 class App extends Component {
   render() {
     return (
-      <AppNavigator screenProps={{api: api}} />
+      <AppNavigator screenProps={{api: api}}/>
     )
   }
 }

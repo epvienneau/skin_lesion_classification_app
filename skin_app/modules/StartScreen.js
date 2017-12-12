@@ -3,17 +3,10 @@ import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, S
 
 
 export default class StartScreen extends Component {
-  _on_press_enter(){
-      Alert.alert('Entering...!');
-  }
-  _on_press_profile(){
-      Alert.alert('Sorry, VIP only...!');
-  }
 
 constructor(props) {
     super(props);
-    this.state = {username: ''};
-    this.state = {password: ''};
+    this.state = {username: '', password: ''};
   }
 
   render() {
@@ -45,7 +38,7 @@ constructor(props) {
             {this.state.valid}
         </Text>
           <Button
-              onPress = {() => checklogin(this.state.username, this.state.password, api, navigate, this)}
+              onPress = {() => checklogin(api, navigate, this)}
               title="Enter"
            />
           <Button
@@ -59,15 +52,15 @@ constructor(props) {
   }
 }
 
-function checklogin(username, password, api, navigate, Screen){
+function checklogin(api, navigate, Screen){
     //api.post('/checklogin', {"username": username,
     //"password": password})
     //    .then
-    if (username != undefined)
+    if (Screen.state.username != undefined)
     {
         api.post('/checklogin', {
-            username: username,
-            password: password,
+            username: Screen.state.username,
+            password: Screen.state.password,
         })
             .then((data) => {
                 Screen.setState({valid: data.data},
@@ -76,7 +69,7 @@ function checklogin(username, password, api, navigate, Screen){
             })
             .then(() => {
                 if (Screen.state.valid == 'YES') {
-                    navigate('HomeScreen')
+                    navigate('HomeScreen', {username: Screen.state.username})
                 }
             })
     }
