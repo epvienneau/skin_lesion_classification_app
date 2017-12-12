@@ -4,6 +4,7 @@ from flask_cors import CORS
 from datetime import datetime
 import json
 
+
 app = Flask(__name__)
 CORS(app)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -47,6 +48,7 @@ def requests():
     count_requests += 1
     resp = jsonify(count_requests)
     return resp
+
 
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
