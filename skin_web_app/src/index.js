@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { BrowserRouter } from 'react-router-dom'
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+import Upload from './Upload';
+import CreateProfile from './CreateProfile';
+import StartScreen from './StartScreen';
+import { Router, Route, hashHistory } from 'react-router';
+ReactDOM.render
+(<App/>, document.getElementById('root'));
 registerServiceWorker();
