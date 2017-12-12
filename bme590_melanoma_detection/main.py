@@ -132,8 +132,23 @@ def display_thumbnail(verbose):
     return: resp: (json) image, date capture, tag. If verbose = 1: result, true diagnosis, diameter are also returned. 
     """
 
-@app.route('/prediction', methods=['POST'])
+@app.route('/uploadimage', methods=['POST'])
 def upload_image():
+    req = request.json
+    impath = 'bme590_melanoma_detection/images/' ## CHANGE THIS TO THE LOCAL ADDRESS WHERE IMAGES ARE STORED
+    im_path = impath + req['imname']
+
+    new_image = ImPath(username = req['username'],
+                    impath = im_path)
+    try:
+        db.session.add(new_image)
+        db.session.commit()
+    except:
+        return 'Error in uploading image'
+    return 'Hi'
+
+@app.route('/prediction', methods=['POST'])
+def prediction():
     """
 
     Sends image and associated data (tag, date, diameter) to DB 
