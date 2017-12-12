@@ -11,7 +11,7 @@ export default class PredictionResults extends React.Component {
     const { navigate } = this.props.navigation;
     var api = this.props.screenProps.api;
     var predTextColor = 'green';
-    console.log(this.props.navigation.state.params.impath)
+
     try {
         let im = {uri: this.props.navigation.state.params.impath};
     }

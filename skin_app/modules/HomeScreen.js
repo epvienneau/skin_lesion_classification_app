@@ -30,7 +30,7 @@ export default class Profile extends Component {
             photoHolder.push(
             <View style={styles.thumbnail} key={i}>
                 <TouchableHighlight
-                    onPress={console.log(i)}//navigate('PredictionResults', {impath: this.state.images[i]})}
+                    onPress={() => navigate('PredictionResults')}
                 >
                     <Image source={{uri: this.state.images[i]}} style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
