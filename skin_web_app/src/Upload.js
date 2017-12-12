@@ -11,11 +11,16 @@ import { UploadField } from '@navjobs/upload';
 class Upload extends Component{
 	constructor(){
 		super();
-		this.state={image:'',malignant:'',benign:''}
+		this.state={image:'',malignant:'.6',benign:'.4',color:'blue'}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
 		console.log(this.state.image)
+		if (parseInt(this.state.malignant)>0.5){
+			this.setState({color:'red'})
+		}
+			else{
+				this.setState({color:'green'})}
 	}
 	getPrediction = (image) =>{
 		console.log('hi')
@@ -39,6 +44,7 @@ class Upload extends Component{
 		
 		return(
 			<div>
+	
 				<MuiThemeProvider>
 					
 					<RaisedButton
@@ -61,7 +67,11 @@ class Upload extends Component{
 					</div>
 				</UploadField>
 				<center>
+				<div style={{backgroundColor: this.state.color,width:'200px', 
+							height:'200px'}}>
+				
 				<img src={this.state.image} width="90" height="90"/>
+				</div>		
 				<p> Percent Malignant {this.state.malignant}</p>
 				<p> Percent Benign {this.state.benign}</p>
 				</center>
