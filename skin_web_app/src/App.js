@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CreateProfile from './CreateProfile';
 import StartScreen from './StartScreen';
+import HomeScreen from './Homescreen';
 import Upload from './Upload';
 import axios from 'axios';
 
@@ -17,19 +18,20 @@ const CREATE_PROFILE = 'create-profile';
 
 class App extends Component {
   state = {
-    currentScreen:START_SCREEN,
+    currentScreen:HOME_SCREEN,
+    username:''
   } 
 
-  onScreenChange = (screenID) => {
-    this.setState({currentScreen:screenID});
+  onScreenChange = (screenID, username) => {
+    this.setState({currentScreen:screenID, username:username});
   }
 
   render() {
     if (this.state.currentScreen === START_SCREEN){
       return (
         <div>
-          <StartScreen onScreenChange={this.onScreenChange}/>
-        </div>
+            <StartScreen onScreenChange={this.onScreenChange}/>
+	</div>
       )
     }
     else if (this.state.currentScreen === UPLOAD){
@@ -41,15 +43,16 @@ class App extends Component {
     } 
     else if (this.state.currentScreen === HOME_SCREEN){
       return (
-        <div> 
-	{/*<HomeScreen onScreenChange={this.onScreenChange}/>*/}
+        <div>
+	    <HomeScreen onScreenChange={this.onScreenChange}/>
 	</div>
       )
     }
     else if (this.state.currentScreen === EDIT_PROFILE){
       return (
         <div>
-	{/*<EditProfile onScreenChange={this.onScreenChange}/>*/}
+	  {/*<EditProfile onScreenChange={this.onScreenChange}/>*/}
+	  Hello!
 	</div>
       )
     }

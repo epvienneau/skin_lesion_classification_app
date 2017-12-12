@@ -37,7 +37,7 @@ class StartScreen extends Component {
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
-	    onClick={() => {this.props.onScreenChange('homescreen')}}/>
+	    onClick={() => {this.props.onScreenChange('homescreen', this.state.username)}}/>
 	</MuiThemeProvider>
       </div>
     )
