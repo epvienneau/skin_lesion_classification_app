@@ -98,8 +98,20 @@ def create_new_profile():
 
     return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
     """
-    
-    return resp
+    req = request.json
+    new_user = User(username = req['username'],
+                    password = req['password'],
+                    personal_history = req['personal_history'],
+                    family_history = req['family_history'],
+                    gender = req['gender'],
+                    email = req['email'],
+                    bday = req['bday'])
+    try:
+        db.session.add(new_user)
+        db.session.commit()
+    except:
+        return 'Error, User with that username or password might already exist'
+    return 'Hi'
 
 @app.route('/update_profile/<username>', methods=['POST'])
 def update_profile(username):
@@ -129,11 +141,8 @@ def upload_image():
     return: resp: (json)
     """
     req = request.json
-    print(req['image'][23:30])
-    print(req['image'][-10:])
     image = req['image'][23:]
     imgdata = base64.b64decode(image)
-    #print(imgdata)
     filename = 'some_image.jpg'
     with open(filename, 'wb') as f:
         f.write(imgdata)
