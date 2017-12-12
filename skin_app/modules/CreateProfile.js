@@ -5,7 +5,16 @@ import CheckBox from 'react-native-check-box';
 export default class CreateProfile extends Component{
 constructor(){
 	super();
-	this.state = { username: '', password:'', confpassword:'', email:'',bday:"2018-01-01",phistory: false, fhistory:false, sex: 'Select Sex at Birth', emailpref:false, existing:false };
+	this.state = { username: '',
+		password:'',
+		confpassword:'',
+		email:'',
+		bday:"2018-01-01",
+		phistory: false,
+		fhistory:false,
+		sex: 'Select Sex at Birth',
+		emailpref:false,
+		existing:false };
 	this.JSONformat = {"username": this.state.username,"password":this.state.password};
 }
 
@@ -35,15 +44,15 @@ render(){
                         />
 			<TextInput
                                 style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
-                                placehodler = {'Email'}
-				onChangeText={(text) => this.setState({email:text})}
+								onChangeText={(text) => this.setState({email:text})}
+								placeholder = {'Email'}
                                 value={this.state.email}
                         />
 			 <DatePicker
         			style={{width: 200}}
        				date={this.state.date}
        				mode="date"
-        			placeholder="select date"
+        			placeholder="select date of birth"
        				format="YYYY-MM-DD"
         			minDate="1900-05-01"
         			maxDate="2018-06-01"
@@ -89,7 +98,7 @@ render(){
                          leftText={'Would you like to recieve emails?'}
                         />
 			<Button
-			 onPress={()=>checkPwords(this.state.password,this.state.confpassword, navigate)}
+			 onPress={()=>checkPwords(navigate, api, this)}
  			 title="CreateProfile"
 			/>
 		</ScrollView>
@@ -97,10 +106,24 @@ render(){
 } 
 }
 // Works on both iOS and Android
-function checkPwords(pw,confirmer, navigate){
-	if (confirmer == pw){
-		alert('Account Created!','Please log in','Ok')
-		navigate('HomeScreen')}
+function checkPwords(navigate, api, Screen){
+	console.log('Hi')
+	if (Screen.state.confpassword == Screen.state.password &&
+		Screen.state.username != '' &&
+		Screen.state.email != '' &&
+		Screen.state.sex.length <= 10){
+		api.post('/create_new_profile', {
+			username: Screen.state.username,
+			password: Screen.state.password,
+			personal_history: Screen.state.phistory,
+			family_history: Screen.state.fhistory,
+			gender: Screen.state.sex,
+			email: Screen.state.email,
+			bday: Screen.state.bday,
+		})
+			.then((data) => console.log(Screen.state))
+			.then(() => navigate('HomeScreen', {username: Screen.state.username}))
+	}
 	else{
 		alert('Invalid Confirmation','Please make sure your passwords match','Ok')}
 

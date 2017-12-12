@@ -3,12 +3,6 @@ import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, S
 
 
 export default class StartScreen extends Component {
-  _on_press_enter(){
-      Alert.alert('Entering...!');
-  }
-  _on_press_profile(){
-      Alert.alert('Sorry, VIP only...!');
-  }
 
 constructor(props) {
     super(props);

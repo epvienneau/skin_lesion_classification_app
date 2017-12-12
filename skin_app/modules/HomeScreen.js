@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { AppRegistry, Image, StyleSheet, Text, View, TextInput, Button, Alert, ScrollView, TouchableHighlight } from 'react-native';
 import axios from 'axios';
 
-
 export default class Profile extends Component {
     constructor(){
         super();
@@ -26,26 +25,18 @@ export default class Profile extends Component {
             username = 'User';
         }
 
-        let im = [{
-            uri: "http://s4.thingpic.com/images/qX/PeLog95AZW23TJ28zWNvJe8H.jpeg"
-        }, {
-            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQzfr1g1NVTaF6Supekx4E38lieCPrVbknP_Y7aSuv9DEKaApv"
-        }, {
-            uri: "http://i.dailymail.co.uk/i/pix/2017/06/27/23/41D1F84200000578-4645232-image-a-59_1498604398087.jpg"
-        }];
-
         var photoHolder = [];
         for(var i=0;i<this.state.images.length;i++){
             photoHolder.push(
             <View style={styles.thumbnail} key={i}>
                 <TouchableHighlight
-                    onPress={() => Alert.alert('Navigating to PredictionResults')}
+                    onPress={console.log(i)}//navigate('PredictionResults', {impath: this.state.images[i]})}
                 >
                     <Image source={{uri: this.state.images[i]}} style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
                 <Text>Date Captured:</Text>
                 <Text>User Defined Tag:</Text>
-                <Text>{this.state.count}</Text>
+                <Text>{i}</Text>
             </View>
             )
         }

@@ -11,7 +11,13 @@ export default class PredictionResults extends React.Component {
     const { navigate } = this.props.navigation;
     var api = this.props.screenProps.api;
     var predTextColor = 'green';
-    let im = {uri: "https://www.healthline.com/hlcmsresource/images/Image-Galleries/melanoma/662-Melanoma_Pictures-642x361-Slide2.jpg"};
+    console.log(this.props.navigation.state.params.impath)
+    try {
+        let im = {uri: this.props.navigation.state.params.impath};
+    }
+    catch(err){
+        im = {uri: "https://www.healthline.com/hlcmsresource/images/Image-Galleries/melanoma/662-Melanoma_Pictures-642x361-Slide2.jpg"};
+    }
     if (this.state.pred === 'Malignant'){predTextColor = 'red'}
     return(
       <ScrollView style={{padding: 70}}>
