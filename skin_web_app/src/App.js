@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import CreateProfile from './CreateProfile';
 import StartScreen from './StartScreen';
-import HomeScreen from './Homescreen';
+import HomeScreen from './HomeScreen';
 import Upload from './Upload';
 import axios from 'axios';
 
