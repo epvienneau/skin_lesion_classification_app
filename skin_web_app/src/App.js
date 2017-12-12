@@ -1,31 +1,73 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import CreateProfile from './CreateProfile';
-import axios from 'axios';
-import Upload from './Upload';
-
 import StartScreen from './StartScreen';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom'
+import Upload from './Upload';
+import axios from 'axios';
 
 var api = axios.create({
     baseURL:'http://192.168.0.5:5000'
     });
 
+const START_SCREEN = 'startscreen';
+const UPLOAD = 'upload';
+const HOME_SCREEN = 'homescreen';
+const EDIT_PROFILE = 'edit-profile';
+const CREATE_PROFILE = 'create-profile';
+
 class App extends Component {
+  state = {
+    currentScreen:START_SCREEN,
+  } 
+
+  onScreenChange = (screenID) => {
+    this.setState({currentScreen:screenID});
+  }
+
   render() {
-    return (
-      <div className="App">
-	  <CreateProfile/>
-	    <Upload/>
-	    <StartScreen/>
+    if (this.state.currentScreen === START_SCREEN){
+      return (
+        <div>
+          <StartScreen onScreenChange={this.onScreenChange}/>
+        </div>
+      )
+    }
+    else if (this.state.currentScreen === UPLOAD){
+      return (
+      <div>
+        <Upload onScreenChange={this.onScreenChange}/>
       </div>
-    );
+      )
+    } 
+    else if (this.state.currentScreen === HOME_SCREEN){
+      return (
+        <div> 
+	{/*<HomeScreen onScreenChange={this.onScreenChange}/>*/}
+	</div>
+      )
+    }
+    else if (this.state.currentScreen === EDIT_PROFILE){
+      return (
+        <div>
+	{/*<EditProfile onScreenChange={this.onScreenChange}/>*/}
+	</div>
+      )
+    }
+    else if (this.state.currentScreen === CREATE_PROFILE){
+      return (
+        <div>
+          <CreateProfile onScreenChange={this.onScreenChange}/>
+	</div>
+      )
+    } 
   }
 }
 
 export default App;
+
+
+
+
+
+
+
