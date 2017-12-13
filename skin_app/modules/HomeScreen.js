@@ -27,17 +27,16 @@ export default class Profile extends Component {
 
         var photoHolder = [];
         for(var i=0;i<this.state.images.length;i++){
-            uri = 'data:image/png;base64,' + this.state.images[i]
+            uri = this.state.images[i]['image']
             photoHolder.push(
             <View style={styles.thumbnail} key={i}>
+                <Text>Image {i + 1}</Text>
                 <TouchableHighlight
                     onPress={() => navigate('PredictionResults')}
                 >
                     <Image source={{uri: uri}} style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
-                <Text>Date Captured:</Text>
-                <Text>User Defined Tag:</Text>
-                <Text>{i}</Text>
+                <Text style={{height: 30}}>Percent Malignant: {this.state.images[i]['prediction']}</Text>
             </View>
             )
         }
@@ -50,12 +49,6 @@ export default class Profile extends Component {
                 </Text>
                 <Text style={styles.baseText}> Upload History</Text>
                 <View>{photoHolder}</View>
-                <Button title = "Upload New Image"
-                    onPress={() => navigate('Upload', {api: api})}
-                />
-                <Button title="Edit Profile"
-                    onPress={() => navigate('EditProfile')}
-                />
                 <Button title="Log Out"
                     onPress={() => navigate('StartScreen')}
                 />
@@ -94,7 +87,7 @@ const styles = StyleSheet.create({
   thumbnail: {
       backgroundColor: '#DDDDDD',
       alignItems: 'center',
-      width: 200,
+      width: 300,
   }
 });
 

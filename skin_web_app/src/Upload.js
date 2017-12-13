@@ -27,7 +27,7 @@ class Upload extends Component{
 		this.state.api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
 			.then(() =>
-	this.stateapi.post('/uploadimage',
+	this.state.api.post('/uploadimage',
 		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})//We need to make this so that there is a user logged in (like there is in the react native
 					.then((data) => console.log(data.data)))
 	}
