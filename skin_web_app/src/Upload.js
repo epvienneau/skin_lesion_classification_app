@@ -8,9 +8,9 @@ import DropzoneComponent from 'react-dropzone-component';
 import { UploadField } from '@navjobs/upload';
 
 class Upload extends Component{
-	constructor(){
-		super();
-		this.state={image:'',malignant:'.6',benign:'.4',color:'blue',imname: ''}
+	constructor(props){
+		super(props);
+		this.state={username:this.props.username,image:'',malignant:'.6',benign:'.4',color:'blue',imname: ''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -26,7 +26,7 @@ class Upload extends Component{
 		var imstring = JSON.stringify({'image':this.state.image})
 		api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
-		api.post('/uploadimage',{'imname':this.state.imname, 'username': 'Pablo'})//We need to make this so that there is a user logged in (like there is in the react native
+		api.post('/uploadimage',{'imname':this.state.imname, 'username': this.state.username})
 			.then((data) => console.log(data.data))
 	}
 	onUpload = (files) => {
@@ -46,10 +46,12 @@ class Upload extends Component{
 	render(){
 		
 		return(
-			<div>
-	
 				<MuiThemeProvider>
-					
+						<div>
+						<header className="App-header">
+                   				 <h1 className="App-title">Upload an Image</h1>
+        					</header> <br />
+	    					</div>	
 					<RaisedButton
 					label="Get Prediction"
      					labelPosition="before"
@@ -79,7 +81,7 @@ class Upload extends Component{
 				<p> Percent Benign {this.state.benign}</p>
 				</center>
 				</MuiThemeProvider>
-			</div>
+	
 		)
 	}
 }

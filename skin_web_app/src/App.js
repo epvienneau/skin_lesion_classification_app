@@ -18,7 +18,7 @@ const CREATE_PROFILE = 'create-profile';
 
 class App extends Component {
   state = {
-    currentScreen:HOME_SCREEN,
+    currentScreen:START_SCREEN,
     username:''
   } 
 
@@ -30,36 +30,28 @@ class App extends Component {
     if (this.state.currentScreen === START_SCREEN){
       return (
         <div>
-            <StartScreen onScreenChange={this.onScreenChange}/>
+            <StartScreen onScreenChange={this.onScreenChange} username={this.state.username}/>
 	</div>
       )
     }
     else if (this.state.currentScreen === UPLOAD){
       return (
       <div>
-        <Upload onScreenChange={this.onScreenChange}/>
+        <Upload onScreenChange={this.onScreenChange} username={this.state.username}/>
       </div>
       )
     } 
     else if (this.state.currentScreen === HOME_SCREEN){
       return (
         <div>
-	    <HomeScreen onScreenChange={this.onScreenChange}/>
-	</div>
-      )
-    }
-    else if (this.state.currentScreen === EDIT_PROFILE){
-      return (
-        <div>
-	  {/*<EditProfile onScreenChange={this.onScreenChange}/>*/}
-	  Hello!
+	    <HomeScreen onScreenChange={this.onScreenChange} username={this.state.username}/>
 	</div>
       )
     }
     else if (this.state.currentScreen === CREATE_PROFILE){
       return (
         <div>
-          <CreateProfile onScreenChange={this.onScreenChange}/>
+          <CreateProfile onScreenChange={this.onScreenChange} username={this.state.username}/>
 	</div>
       )
     } 

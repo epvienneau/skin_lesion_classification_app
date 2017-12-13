@@ -35,7 +35,7 @@ class CreateProfile extends Component{
 			}
 		}
 		setBday = (event) => {
-			this.setSTate({
+			this.setState({
 			birthday:event.target.value,
 			});
 		}
@@ -63,7 +63,7 @@ class CreateProfile extends Component{
 			<MuiThemeProvider>
 				<div> 
 					<header className="App-header">
-                    			<h1 className="App-title">CreateProfile</h1>
+                    			<h1 className="App-title">Create Profile</h1>
         				</header>
 					<TextField
       					hintText="Username"
@@ -81,7 +81,7 @@ class CreateProfile extends Component{
 					<TextField
       					hintText="Confirm Password"
       					errorText="This field is required"
-    					onChange= {this.checkPassword} 
+    					onChange= {()=>{this.checkPassword}} 
 					/><br />
 					<TextField
       					hintText="Email"

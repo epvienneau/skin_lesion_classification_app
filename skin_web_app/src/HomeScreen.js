@@ -11,20 +11,31 @@ import axios from 'axios';
 class HomeScreen extends Component{
   constructor(props){
     super(props);
-    this.state = {'username':'polortiz4','images':[]}
+    this.state = {'username':this.props.username,'images':[]}
   }
 
   render(){
   var api = axios.create({baseURL:"http://152.3.53.222:8000"})
 return(
-    <div>
-      <MuiThemeProvider>  
-        <RaisedButton
-          label="View Image History"
+	<MuiThemeProvider>
+	 <div>
+		<header className="App-header">
+                    <h1 className="App-title">Welcome {this.state.username}</h1>
+        	</header> <br />
+	    </div>	
+	  <center><RaisedButton
+          label="View History"
           labelPosition="before"
           style={styles.button}
-	  onClick={this.getRepos(api,this.state.username)}
-        />
+	  onClick={
+		  () => {this.getRepos(api,this.state.username)}}
+        /></center> <br />
+	<center> <RaisedButton
+	label="Upload New Image"
+	labelPosition="before"
+	style={styles.button}
+	onClick={()=>{this.props.onScreenChange('upload', this.state.username)}}
+	/></center> <br />
        <GridList
          cellHeight={180}
 	 style={styles.gridList}
@@ -32,20 +43,22 @@ return(
        <Subheader>Image History</Subheader>
         {this.state.images.map((tile)=>(
 	  <GridTile
-            key={tile.img}
+            key={tile}
           >
-          <img src={tile.img}/>
+          <img src={tile}/>
 	 </GridTile>
 	))}
        </GridList>
      </MuiThemeProvider> 
-    </div>		
+   		
   )
   }
 getRepos=(api, username)=>{
-  api.get('/getImages/' + username)
-  .then((data) => this.setState({images: data.data}))
-  .then(() => console.log(this.state.images));
+  api.get('/getImages/'+ username)
+  .then((data)=>{
+	  console.log(data.data);
+	  this.setState({images:data.data})
+  });
 }
 }
 const styles = {

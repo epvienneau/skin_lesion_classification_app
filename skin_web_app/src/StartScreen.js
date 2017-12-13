@@ -15,31 +15,43 @@ class StartScreen extends Component {
   }
   changePassword = (event) => {
     this.setState({
-      username: event.target.value,
+      password: event.target.value,
     });
   }
   
   render(){
     return(
-      <div>
+
         <MuiThemeProvider>
-          <TextField
-            id="text-field-controlled"
+	    <div>
+		<header className="App-header">
+                    <h1 className="App-title">Welcome to SkinApp</h1>
+        	</header>
+	    </div>
+            <center><TextField
+	    id='usernamebox'
             value={this.state.username}
+	    hintText="Username"
             onChange={this.changeUsername}/>
-	    <br/>
-	    <TextField
-            id="text-field-controlled"
+	    <br/></center>
+	    <center><TextField
+	    id='passwordbox'
             value={this.state.password}
+	    hintText="Password"
             onChange={this.changePassword}/>
-	    <br/>
+	    <br/></center>
 	    <RaisedButton
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
 	    onClick={() => {this.props.onScreenChange('homescreen', this.state.username)}}/>
+	    <RaisedButton
+	    label="Create Profile"
+      	    labelPosition="before"
+      	    style={styles.button}
+	    onClick={() => {this.props.onScreenChange('create-profile', this.state.username)}}/>
 	</MuiThemeProvider>
-      </div>
+  
     )
   }
 }
@@ -58,6 +70,12 @@ const styles = {
     width: '100%',
     opacity: 0,
   },
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  }
 };
 
 export default StartScreen;
