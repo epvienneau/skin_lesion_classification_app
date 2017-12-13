@@ -11,7 +11,7 @@ import MenuItem from 'material-ui/MenuItem';
 class CreateProfile extends Component{
 	constructor(props){
 		super(props);
-		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false, gender:'', api : this.props.api}
+		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false, gender:'', confpassword:'', api : this.props.api}
 	}
  		changeUsername = (event) => {
     		this.setState({
@@ -28,17 +28,19 @@ class CreateProfile extends Component{
       		email: event.target.value,
     		});	
  		}
-
-		checkPassword= (event) => {
+		confirmpword = (event) =>{
+			this.setState({confpassword:event.target.value});
+		}
+		checkPassword= (conf) => {
     		
-      			var checker = event.target.value
+      			var checker = conf
     			if (checker !== this.state.password) {
 				alert("Passwords must match");
 			}
 		}
-		setBday = (event) => {
+		setBday = (event,date) => {
 			this.setState({
-			birthday:event.target.value,
+			birthday:date,
 			});
 		}
 		updatePhistory() {
@@ -55,13 +57,23 @@ class CreateProfile extends Component{
       				};
     			});
   		}
-		sendtodb(dat){
-			var jsonformat = JSON.stringify(dat);
-			this.state.api.post('/create_new_profile' , jsonformat).then(()=>{this.props.onScreenChange('homescreen', this.state.username)})}
-		changeGender= (event, index, value) => this.setState({gender:event.target.value});
+		sendtodb= (dat) =>{
+			if (String(this.state.password)===(String(this.state.confpassword))){
+				this.state.api.post('/create_new_profile' , dat)
+					.then(console.log('yay'))
+						.then(()=>{this.props.onScreenChange('homescreen', this.state.username)})
+			}
+			else{
+				alert("Passwords must match")
+			}
+		}
+		
+		changeGender=(event, index, value)=>
+			this.setState({gender:event.target.value});
+		
 
 	render(){
-				return(
+		return(
 			<MuiThemeProvider>
 				<div> 
 					<header className="App-header">
@@ -69,30 +81,26 @@ class CreateProfile extends Component{
         				</header>
 					<TextField
       					hintText="Username"
-      					errorText="This field is required"
 					value={this.state.username}
     					onChange= {this.changeUsername} 
 					/><br />
 			
 					<TextField
       					hintText="Password"
-      					errorText="This field is required"
 					value={this.state.password}
     					onChange= {this.changePassword} 
 					/><br />
 					<TextField
       					hintText="Confirm Password"
-      					errorText="This field is required"
-    					onChange= {()=>{this.checkPassword}} 
+    					onChange= {this.confirmpword} 
 					/><br />
 					<TextField
       					hintText="Email"
-      					errorText="This field is required"
 					value={this.state.email}
     					onChange= {this.changeEmail} 
 					/><br />
 					<DatePicker 
-					onDismiss={this.setBday}
+					onChange={this.setBday}
 					hintText="Birthday" 
 					/>
 					<Checkbox
@@ -120,7 +128,7 @@ class CreateProfile extends Component{
      		 			labelPosition="before"
       					style={styles.button}
       					containerElement="label"
-					onClick={this.sendtodb({username:this.state.username, password:this.state.password,email:this.state.email,bday:this.state.birthday,phist:this.state.personal_history,family_hist:this.state.fhistory,gender:this.state.gender})}
+					onClick={()=>{this.sendtodb({username:this.state.username, password:this.state.password,email:this.state.email,bday:this.state.birthday,personal_history:this.state.phistory,family_history:this.state.fhistory,gender:this.state.gender})}}
 					/><br/>
 					<br/>
 					<RaisedButton
