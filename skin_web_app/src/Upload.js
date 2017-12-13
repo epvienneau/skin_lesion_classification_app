@@ -86,7 +86,7 @@ class Upload extends Component{
 		)
 	}
 }
-var api = axios.create({baseURL:'http://192.168.0.5:8000'});
+var api = axios.create({baseURL:'http://67.159.88.37:8000'});
 const styles = {
   button: {
     margin: 12,

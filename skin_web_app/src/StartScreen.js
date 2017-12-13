@@ -77,7 +77,7 @@ class StartScreen extends Component {
     )
   }
 }
-var api = axios.create({baseURL:"http://"})
+var api = axios.create({baseURL:"http://67.159.88.37"})
 const styles = {
   button: {
     margin: 12,
