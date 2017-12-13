@@ -34,13 +34,15 @@ render(){
                                 style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
                                 onChangeText={(text) => this.setState({password:text})}
                                 placeholder = {'Password'}
-				value={this.state.password}
+								value={this.state.password}
+								secureTextEntry={true}
                         />
 			<TextInput
                                 style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
                                 onChangeText={(text) =>{ this.setState({confpassword:text})}}
                                 placeholder = {'Confirm Password'}
-				value={this.state.confpassword}
+								value={this.state.confpassword}
+								secureTextEntry={true}
                         />
 			<TextInput
                                 style={{height: 40, borderColor: 'gray', borderWidth: 1, margin:5}}
