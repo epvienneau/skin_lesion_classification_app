@@ -10,7 +10,7 @@ import { UploadField } from '@navjobs/upload';
 class Upload extends Component{
 	constructor(props){
 		super(props);
-		this.state={username:this.props.username,image:'',malignant:'.6',benign:'.4',color:'blue',impath: ''}
+		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: ''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -53,22 +53,22 @@ class Upload extends Component{
                    				 <h1 className="App-title">Upload an Image</h1>
         					</header> <br />
 	    					</div>	
-					<RaisedButton
+					<center><RaisedButton
 					label="Get Prediction"
      					labelPosition="before"
       					style={styles.button}
 					onClick={() => this.getPrediction(this.state.image)}
       					containerElement="label"
-   					/>	
+   					/></center>	
 				<UploadField onFiles={this.onUpload}>
 					<div>
 						<MuiThemeProvider>
-							<RaisedButton
+							<center><RaisedButton
       							label="Choose an Image"
      							labelPosition="before"
       							style={styles.button}
       							containerElement="label"
-   							/>
+   							/></center>
 						</MuiThemeProvider>
 					</div>
 				</UploadField>
@@ -86,7 +86,7 @@ class Upload extends Component{
 		)
 	}
 }
-var api = axios.create({baseURL:'http://192.168.0.5:8000'});
+var api = axios.create({baseURL:'http://67.159.88.37:8000'});
 const styles = {
   button: {
     margin: 12,

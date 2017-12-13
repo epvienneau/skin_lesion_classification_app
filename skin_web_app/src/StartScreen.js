@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import axios from 'axios';
 class StartScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {username: '',password: ''}
+    this.state = {username: '',password: '', valid:''}
   }
   changeUsername = (event) => {
     this.setState({
@@ -18,11 +18,33 @@ class StartScreen extends Component {
       password: event.target.value,
     });
   }
-  
+  checklogin = () =>{
+    if (this.state.username != undefined)
+    {
+        api.post('/checklogin', {
+            username: this.state.username,
+            password: this.state.password,
+        })
+            .then((data) => {
+                this.setState({valid: data.data},
+                    () => console.log(this.state.valid),
+                )
+            })
+            .then(() => {
+                if (this.state.valid == 'YES') { ()=>
+			{this.props.onScreenChange('homescreen', {username: this.state.username})
+                }
+            }})
+   	 }
+    else{
+        Screen.setState({valid: 'Please input a username'})
+    }
+} 
+
   render(){
     return(
 
-        <MuiThemeProvider>
+        <MuiThemeProvider>Screen.state.Screen.state.
 	    <div>
 		<header className="App-header">
                     <h1 className="App-title">Welcome to SkinApp</h1>
@@ -44,7 +66,7 @@ class StartScreen extends Component {
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
-	    onClick={() => {this.props.onScreenChange('homescreen', this.state.username)}}/>
+	    onClick={() => {this.checklogin(api, this.state.username)}}/>
 	    <RaisedButton
 	    label="Create Profile"
       	    labelPosition="before"
@@ -55,7 +77,7 @@ class StartScreen extends Component {
     )
   }
 }
-
+var api = axios.create({baseURL:"http://67.159.88.37"})
 const styles = {
   button: {
     margin: 12,
