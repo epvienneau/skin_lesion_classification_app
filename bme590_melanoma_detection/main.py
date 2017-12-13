@@ -85,7 +85,10 @@ def get_images(username):
     """
     resp = []
     for image in ImPath.query.filter_by(username=username):
-        resp.append(image.impath)
+        with open(image.impath, 'r') as f:
+            im = f.read()
+        im = im.encode('base64')
+        resp.append(im)
     return json.dumps(resp)
 
 
@@ -136,8 +139,6 @@ def display_thumbnail(verbose):
 def upload_image():
     req = request.json
     im_path = req['impath']
-    print(req)
-    print(im_path)
     new_image = ImPath(username = req['username'],
                     impath = im_path)
     try:
