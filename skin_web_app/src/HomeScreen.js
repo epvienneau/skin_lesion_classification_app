@@ -15,7 +15,7 @@ class HomeScreen extends Component{
   }
 
   render(){
-  var api = axios.create({baseURL:"http://152.3.53.222:8000"})
+  var api = axios.create({baseURL:"http://192.168.0.5:8000"})
 return(
 	<MuiThemeProvider>
 	 <div>
