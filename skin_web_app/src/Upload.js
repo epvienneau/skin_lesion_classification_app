@@ -26,7 +26,9 @@ class Upload extends Component{
 		var imstring = JSON.stringify({'image':this.state.image})
 		api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
-			.then(() => api.post('/uploadimage',{'impath':this.state.impath, 'username': this.state.username})//We need to make this so that there is a user logged in (like there is in the react native
+			.then(() =>
+	api.post('/uploadimage',
+		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})//We need to make this so that there is a user logged in (like there is in the react native
 					.then((data) => console.log(data.data)))
 	}
 	onUpload = (files) => {
@@ -86,7 +88,7 @@ class Upload extends Component{
 		)
 	}
 }
-var api = axios.create({baseURL:'http://67.159.88.37:8000'});
+var api = axios.create({baseURL:'http://192.168.0.5:8000'});
 const styles = {
   button: {
     margin: 12,

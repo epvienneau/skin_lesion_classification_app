@@ -43,9 +43,10 @@ return(
        <Subheader>Image History</Subheader>
         {this.state.images.map((tile)=>(
 	  <GridTile
-            key={tile}
+            key={tile.image}
+            title={tile.prediction}
           >
-          <img uri={tile}/>
+          <img src = {tile.image}/>
 	 </GridTile>
 	))}
        </GridList>

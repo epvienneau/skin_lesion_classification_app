@@ -31,9 +31,8 @@ class StartScreen extends Component {
                 )
             })
             .then(() => {
-                if (this.state.valid == 'YES') { ()=>
-			{this.props.onScreenChange('homescreen', {username: this.state.username})
-                }
+                if (this.state.valid == 'YES') {
+			this.props.onScreenChange('homescreen', this.state.username)
             }})
    	 }
     else{
@@ -56,15 +55,15 @@ class StartScreen extends Component {
 	    hintText="Username"
             onChange={this.changeUsername}/>
 	    <br/></center>
-	    <center><TextField
+	    <center><PasswordMask
 	    id='passwordbox'
             value={this.state.password}
 	    hintText="Password"
             onChange={this.changePassword}/>
-	    <br/></center>
+	    <br/>
 		<div style={{fontSize: 10, fontFamily: 'Verdana', color: 'red'}}>
             {this.state.valid}
-        </div>
+        </div></center>
 		<RaisedButton
 	    label="Log In"
       	    labelPosition="before"

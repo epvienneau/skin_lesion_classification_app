@@ -35,6 +35,7 @@ class ImPath(db.Model):
     username = db.Column(db.String(80), unique=False, nullable=False)
     impath = db.Column(db.String(200), unique=True, nullable=False)
     date = db.Column(db.DateTime, unique=False, default=datetime.utcnow)
+    pred = db.Column(db.String(80), unique=False, nullable=False)
     #tag = db.Column(db.String(200), unique=False, nullable=True)
     #diam = db.Column(db.DECIMAL(4), unique=False, nullable=True)
 
@@ -87,8 +88,9 @@ def get_images(username):
     for image in ImPath.query.filter_by(username=username):
         with open(image.impath, 'r') as f:
             im = f.read()
-        im = im.encode('base64')
-        resp.append(im)
+        im = 'data:image/png;base64,' + im.encode('base64')
+        pred = image.pred
+        resp.append({'image': im, 'prediction': pred})
     return json.dumps(resp)
 
 
@@ -140,7 +142,8 @@ def upload_image():
     req = request.json
     im_path = req['impath']
     new_image = ImPath(username = req['username'],
-                    impath = im_path)
+                    impath = im_path,
+                       pred = req['pred'])
     try:
         db.session.add(new_image)
         db.session.commit()
