@@ -43,7 +43,7 @@ class StartScreen extends Component {
   render(){
     return(
 
-        <MuiThemeProvider>Screen.state.Screen.state.
+        <MuiThemeProvider>
 	    <div>
 		<header className="App-header">
                     <h1 className="App-title">Welcome to SkinApp</h1>
