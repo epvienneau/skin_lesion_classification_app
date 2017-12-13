@@ -9,12 +9,12 @@ import matplotlib.pyplot as mpl
 import base64
 
 app = Flask(__name__)
-CORS(app)
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqldb://polortiz40:mypassword@35.227.93.161/skin_app'
 db = SQLAlchemy(app)
 count_requests = 0
+CORS(app)
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
