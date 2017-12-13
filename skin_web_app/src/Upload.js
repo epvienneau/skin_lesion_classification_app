@@ -10,7 +10,7 @@ import { UploadField } from '@navjobs/upload';
 class Upload extends Component{
 	constructor(props){
 		super(props);
-		this.state={username:this.props.username,image:'',malignant:'.6',benign:'.4',color:'blue',imname: ''}
+		this.state={username:this.props.username,image:'',malignant:'.6',benign:'.4',color:'blue',impath: ''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -26,8 +26,8 @@ class Upload extends Component{
 		var imstring = JSON.stringify({'image':this.state.image})
 		api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
-		api.post('/uploadimage',{'imname':this.state.imname, 'username': this.state.username})
-			.then((data) => console.log(data.data))
+			.then(() => api.post('/uploadimage',{'impath':this.state.impath, 'username': this.state.username})//We need to make this so that there is a user logged in (like there is in the react native
+					.then((data) => console.log(data.data)))
 	}
 	onUpload = (files) => {
 		const reader = new FileReader()
@@ -35,13 +35,14 @@ class Upload extends Component{
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
 			console.log(file);
-			this.setState({image: reader.result, imname: file.name});
+			this.setState({image: reader.result});
 		}
 	}
 	parseData = (data) => {
 		var mal = data['malignant']
 		var ben = data['non malignant']
 		this.setState({malignant: mal, benign: ben});
+		this.setState({impath: data['impath']})
 	}
 	render(){
 		

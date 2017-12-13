@@ -27,12 +27,13 @@ export default class Profile extends Component {
 
         var photoHolder = [];
         for(var i=0;i<this.state.images.length;i++){
+            uri = 'data:image/png;base64,' + this.state.images[i]
             photoHolder.push(
             <View style={styles.thumbnail} key={i}>
                 <TouchableHighlight
                     onPress={() => navigate('PredictionResults')}
                 >
-                    <Image source={{uri: this.state.images[i]}} style={{width: 100, height: 100}}/>
+                    <Image source={{uri: uri}} style={{width: 100, height: 100}}/>
                 </TouchableHighlight>
                 <Text>Date Captured:</Text>
                 <Text>User Defined Tag:</Text>
