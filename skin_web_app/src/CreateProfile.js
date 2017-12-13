@@ -59,9 +59,8 @@ class CreateProfile extends Component{
   		}
 		sendtodb= (dat) =>{
 			if (String(this.state.password)===(String(this.state.confpassword))){
-				this.state.api.post('/create_new_profile' , dat)
-					.then(console.log('yay'))
-						.then(()=>{this.props.onScreenChange('homescreen', this.state.username)})
+                    this.state.api.post('/create_new_profile', dat)
+                        .then(() => {this.props.onScreenChange('homescreen', this.state.username)})
 			}
 			else{
 				alert("Passwords must match")
@@ -81,22 +80,24 @@ class CreateProfile extends Component{
         				</header>
 					<TextField
       					hintText="Username"
-					value={this.state.username}
+					    value={this.state.username}
     					onChange= {this.changeUsername} 
 					/><br />
 			
 					<TextField
       					hintText="Password"
-					value={this.state.password}
-    					onChange= {this.changePassword} 
+						value={this.state.password}
+    					onChange= {this.changePassword}
+    					type="password"
 					/><br />
 					<TextField
       					hintText="Confirm Password"
-    					onChange= {this.confirmpword} 
+    					onChange= {this.confirmpword}
+    					type="password"
 					/><br />
 					<TextField
       					hintText="Email"
-					value={this.state.email}
+						value={this.state.email}
     					onChange= {this.changeEmail} 
 					/><br />
 					<DatePicker 
@@ -119,6 +120,7 @@ class CreateProfile extends Component{
 					floatingLabelText={this.state.gender}
           				value={this.state.gender}
           				onChange={this.changeGender}
+          				hintText="Gender"
         				>
           				<MenuItem value={"Male"} primaryText="Male (xy)" />
           				<MenuItem value={"Female"} primaryText="Female (xx)" />

@@ -110,12 +110,12 @@ def create_new_profile():
                     family_history = req['family_history'],
                     gender = req['gender'],
                     email = req['email'],
-                    bday = req['bday'])
-    try:
-        db.session.add(new_user)
-        db.session.commit()
-    except:
-        return 'Error, User with that username or password might already exist'
+                    bday = req['bday'][0:10])
+    #try:
+    db.session.add(new_user)
+    db.session.commit()
+    #except:
+    #    raise ValueError('Error, User with that username or password might already exist')
     return 'Hi'
 
 @app.route('/update_profile/<username>', methods=['POST'])
@@ -125,16 +125,6 @@ def update_profile(username):
     Updates profile of user associated with given username
 
     return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
-    """
-    
-
-@app.route('/display_thumbnail/<verbose>', methods=['POST'])
-def display_thumbnail(verbose):
-    """
-
-    Retrieves recent images and associated data for upload history or prediction results display
-
-    return: resp: (json) image, date capture, tag. If verbose = 1: result, true diagnosis, diameter are also returned. 
     """
 
 @app.route('/uploadimage', methods=['POST'])
