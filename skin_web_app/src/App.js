@@ -23,35 +23,35 @@ class App extends Component {
   } 
 
   onScreenChange = (screenID, username) => {
-    this.setState({currentScreen:screenID, username:username});
+    this.setState({currentScreen:screenID, username:username, api:api});
   }
 
   render() {
     if (this.state.currentScreen === START_SCREEN){
       return (
         <div>
-            <StartScreen onScreenChange={this.onScreenChange} username={this.state.username}/>
+            <StartScreen onScreenChange={this.onScreenChange} username={this.state.username} api={api}/>
 	</div>
       )
     }
     else if (this.state.currentScreen === UPLOAD){
       return (
       <div>
-        <Upload onScreenChange={this.onScreenChange} username={this.state.username}/>
+        <Upload onScreenChange={this.onScreenChange} username={this.state.username} api={api}/>
       </div>
       )
     } 
     else if (this.state.currentScreen === HOME_SCREEN){
       return (
         <div>
-	    <HomeScreen onScreenChange={this.onScreenChange} username={this.state.username}/>
+	    <HomeScreen onScreenChange={this.onScreenChange} username={this.state.username} api={api}/>
 	</div>
       )
     }
     else if (this.state.currentScreen === CREATE_PROFILE){
       return (
         <div>
-          <CreateProfile onScreenChange={this.onScreenChange} username={this.state.username}/>
+          <CreateProfile onScreenChange={this.onScreenChange} username={this.state.username} api={api}/>
 	</div>
       )
     } 

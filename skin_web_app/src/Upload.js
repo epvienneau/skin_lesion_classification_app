@@ -10,7 +10,7 @@ import { UploadField } from '@navjobs/upload';
 class Upload extends Component{
 	constructor(props){
 		super(props);
-		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: ''}
+		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: '', api:this.props.api}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -24,10 +24,10 @@ class Upload extends Component{
     getPrediction(){
 		console.log('hi')
 		var imstring = JSON.stringify({'image':this.state.image})
-		api.post('/prediction',{'image':this.state.image})
+		this.state.api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
 			.then(() =>
-	api.post('/uploadimage',
+	this.stateapi.post('/uploadimage',
 		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})//We need to make this so that there is a user logged in (like there is in the react native
 					.then((data) => console.log(data.data)))
 	}
@@ -83,12 +83,21 @@ class Upload extends Component{
 				<p> Percent Malignant {this.state.malignant}</p>
 				<p> Percent Benign {this.state.benign}</p>
 				</center>
+				<MuiThemeProvider>
+							<center><RaisedButton
+      							label="Home"
+     							labelPosition="before"
+      							style={styles.button}
+      							containerElement="label"
+							onClick={()=>this.props.onScreenChange('homescreen',this.state.username)}
+   							/></center>
+						</MuiThemeProvider>
+
 				</MuiThemeProvider>
 	
 		)
 	}
 }
-var api = axios.create({baseURL:'http://192.168.0.5:8000'});
 const styles = {
   button: {
     margin: 12,

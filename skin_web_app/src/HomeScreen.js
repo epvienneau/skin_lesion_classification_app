@@ -15,7 +15,7 @@ class HomeScreen extends Component{
   }
 
   render(){
-  var api = axios.create({baseURL:"http://192.168.0.5:8000"})
+  var api = this.props.api
 return(
 	<MuiThemeProvider>
 	 <div>
@@ -44,7 +44,7 @@ return(
         {this.state.images.map((tile)=>(
 	  <GridTile
             key={tile.image}
-            title={tile.prediction}
+            title={<span>{tile.prediction} <b> Pct Malignant </b></span>}
           >
           <img src = {tile.image}/>
 	 </GridTile>

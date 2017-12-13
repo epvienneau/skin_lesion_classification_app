@@ -9,9 +9,9 @@ import axios from 'axios';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 class CreateProfile extends Component{
-	constructor(){
-		super();
-		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false, gender:''}
+	constructor(props){
+		super(props);
+		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false, gender:'', api : this.props.api}
 	}
  		changeUsername = (event) => {
     		this.setState({
@@ -57,7 +57,7 @@ class CreateProfile extends Component{
   		}
 		sendtodb(dat){
 			var jsonformat = JSON.stringify(dat);
-			api.post('/create_new_profile' , jsonformat).then(()=>{this.props.onScreenChange('homescreen', this.state.username)})}
+			this.state.api.post('/create_new_profile' , jsonformat).then(()=>{this.props.onScreenChange('homescreen', this.state.username)})}
 		changeGender= (event, index, value) => this.setState({gender:event.target.value});
 
 	render(){
@@ -134,8 +134,8 @@ class CreateProfile extends Component{
 			</MuiThemeProvider>	
 		);		
 	}	
+
 }
-var api = axios.create({baseURL:'http://67.159.88.37:8000'});
 
 const styles = {
   block: {
