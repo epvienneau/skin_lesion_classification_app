@@ -68,8 +68,8 @@ class CreateProfile extends Component{
 			}
 		}
 		
-		changeGender=(event, index, value)=>
-			this.setState({gender:event.target.value});
+		changeGender=(event,index,value)=>
+			this.setState({gender:value});
 		
 
 	render(){
@@ -116,19 +116,19 @@ class CreateProfile extends Component{
           				style={styles.checkbox}
 					/>
 					<SelectField
-          				floatingLabelText="Select Gender"
-          				value={this.state.value}
+					floatingLabelText={this.state.gender}
+          				value={this.state.gender}
           				onChange={this.changeGender}
         				>
-          				<MenuItem value={1} primaryText="Male" />
-          				<MenuItem value={2} primaryText="Female" />
+          				<MenuItem value={"Male"} primaryText="Male (xy)" />
+          				<MenuItem value={"Female"} primaryText="Female (xx)" />
         				</SelectField><br />
 					<RaisedButton
 					label="Create Profile"
      		 			labelPosition="before"
       					style={styles.button}
       					containerElement="label"
-					onClick={()=>{this.sendtodb({username:this.state.username, password:this.state.password,email:this.state.email,bday:this.state.birthday,personal_history:this.state.phistory,family_history:this.state.fhistory,gender:this.state.gender})}}
+					onClick={()=>{this.sendtodb({username:this.state.username, password:this.state.password, personal_history:this.state.phistory, family_history:this.state.fhistory, gender:this.state.gender,email:this.state.email,bday:this.state.birthday})}}
 					/><br/>
 					<br/>
 					<RaisedButton
