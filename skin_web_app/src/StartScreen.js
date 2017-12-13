@@ -55,7 +55,7 @@ class StartScreen extends Component {
 	    hintText="Username"
             onChange={this.changeUsername}/>
 	    <br/></center>
-	    <center><PasswordMask
+	    <center><TextField
 	    id='passwordbox'
             value={this.state.password}
 	    hintText="Password"
