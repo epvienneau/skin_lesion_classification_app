@@ -62,7 +62,10 @@ class StartScreen extends Component {
 	    hintText="Password"
             onChange={this.changePassword}/>
 	    <br/></center>
-	    <RaisedButton
+		<div style={{fontSize: 10, fontFamily: 'Verdana', color: 'red'}}>
+            {this.state.valid}
+        </div>
+		<RaisedButton
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
@@ -77,7 +80,7 @@ class StartScreen extends Component {
     )
   }
 }
-var api = axios.create({baseURL:"http://67.159.88.37"})
+var api = axios.create({baseURL:"http://192.168.0.5:8000"})
 const styles = {
   button: {
     margin: 12,
