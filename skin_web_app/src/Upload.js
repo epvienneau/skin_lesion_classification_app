@@ -10,7 +10,7 @@ import { UploadField } from '@navjobs/upload';
 class Upload extends Component{
 	constructor(){
 		super();
-		this.state={image:'',malignant:'.6',benign:'.4',color:'blue'}
+		this.state={image:'',malignant:'.6',benign:'.4',color:'blue',impath: ''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -21,23 +21,28 @@ class Upload extends Component{
 			else{
 				this.setState({color:'green'})}
 	}
-	getPrediction = (image) =>{
+    getPrediction(){
 		console.log('hi')
 		var imstring = JSON.stringify({'image':this.state.image})
-		api.post('/prediction',{'image':this.state.image}).then((data)=>{this.parseData(data)})}
+		api.post('/prediction',{'image':this.state.image})
+			.then((data)=>{this.parseData(data.data), console.log(data.data)})
+			.then(() => api.post('/uploadimage',{'impath':this.state.impath, 'username': 'Pablo'})//We need to make this so that there is a user logged in (like there is in the react native
+					.then((data) => console.log(data.data)))
+	}
 	onUpload = (files) => {
 		const reader = new FileReader()
 		const file = files[0]
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
-			console.log("image!");
+			console.log(file);
 			this.setState({image: reader.result});
 		}
 	}
 	parseData = (data) => {
 		var mal = data['malignant']
-		var ben = data['benign']
+		var ben = data['non malignant']
 		this.setState({malignant: mal, benign: ben});
+		this.setState({impath: data['impath']})
 	}
 	render(){
 		
@@ -50,7 +55,7 @@ class Upload extends Component{
 					label="Get Prediction"
      					labelPosition="before"
       					style={styles.button}
-					onClick={this.getPrediction(this.state.image)}
+					onClick={() => this.getPrediction(this.state.image)}
       					containerElement="label"
    					/>	
 				<UploadField onFiles={this.onUpload}>
@@ -79,7 +84,7 @@ class Upload extends Component{
 		)
 	}
 }
-var api = axios.create({baseURL:'http://10.197.81.202:8000'});
+var api = axios.create({baseURL:'http://192.168.0.5:8000'});
 const styles = {
   button: {
     margin: 12,
