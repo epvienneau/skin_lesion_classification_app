@@ -6,7 +6,7 @@ import axios from 'axios';
 class StartScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = {username: '',password: '', valid:''}
+    this.state = {username: '',password: '', valid:'',api:this.props.api}
   }
   changeUsername = (event) => {
     this.setState({
@@ -21,7 +21,7 @@ class StartScreen extends Component {
   checklogin = () =>{
     if (this.state.username != undefined)
     {
-        api.post('/checklogin', {
+        this.state.api.post('/checklogin', {
             username: this.state.username,
             password: this.state.password,
         })
@@ -68,7 +68,7 @@ class StartScreen extends Component {
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
-	    onClick={() => {this.checklogin(api, this.state.username)}}/>
+	    onClick={() => {this.checklogin(this.state.api,this.state.username)}}/>
 	    <RaisedButton
 	    label="Create Profile"
       	    labelPosition="before"
@@ -79,7 +79,6 @@ class StartScreen extends Component {
     )
   }
 }
-var api = axios.create({baseURL:"http://192.168.0.5:8000"})
 const styles = {
   button: {
     margin: 12,
