@@ -7,7 +7,7 @@ import Upload from './Upload';
 import axios from 'axios';
 
 var api = axios.create({
-    baseURL:'http://67.159.88.37:8000'
+    baseURL:'http://152.3.53.222'
     });
 
 const START_SCREEN = 'startscreen';
