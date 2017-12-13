@@ -58,7 +58,8 @@ class StartScreen extends Component {
 	    <center><TextField
 	    id='passwordbox'
             value={this.state.password}
-	    hintText="Password"
+	    	hintText="Password"
+			type = "password"
             onChange={this.changePassword}/>
 	    <br/>
 		<div style={{fontSize: 10, fontFamily: 'Verdana', color: 'red'}}>
