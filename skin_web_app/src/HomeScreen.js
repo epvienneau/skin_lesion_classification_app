@@ -45,10 +45,17 @@ return(
 	  <GridTile
             key={tile}
           >
-          <img src={tile}/>
+          <img uri={tile}/>
 	 </GridTile>
 	))}
        </GridList>
+	<center> <RaisedButton
+	label="Log Out"
+	labelPosition="before"
+	style={styles.button}
+	onClick={()=>{this.props.onScreenChange('startscreen','')}}
+	/></center> <br />
+
      </MuiThemeProvider> 
    		
   )
