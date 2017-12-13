@@ -6,10 +6,12 @@ import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 class CreateProfile extends Component{
 	constructor(){
 		super();
-		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false}
+		this.state = { username: '', password : '', email : '', birthday : '', fhistory : false, phistory : false, gender:''}
 	}
  		changeUsername = (event) => {
     		this.setState({
@@ -35,7 +37,7 @@ class CreateProfile extends Component{
 			}
 		}
 		setBday = (event) => {
-			this.setSTate({
+			this.setState({
 			birthday:event.target.value,
 			});
 		}
@@ -55,15 +57,15 @@ class CreateProfile extends Component{
   		}
 		sendtodb(dat){
 			var jsonformat = JSON.stringify(dat);
-			axios.post('/user' , jsonformat)}
-
+			api.post('/create_new_profile' , jsonformat).then(()=>{this.props.onScreenChange('homescreen', this.state.username)})}
+		changeGender= (event, index, value) => this.setState({gender:event.target.value});
 
 	render(){
-		return(
+				return(
 			<MuiThemeProvider>
 				<div> 
 					<header className="App-header">
-                    			<h1 className="App-title">CreateProfile</h1>
+                    			<h1 className="App-title">Create Profile</h1>
         				</header>
 					<TextField
       					hintText="Username"
@@ -81,7 +83,7 @@ class CreateProfile extends Component{
 					<TextField
       					hintText="Confirm Password"
       					errorText="This field is required"
-    					onChange= {this.checkPassword} 
+    					onChange= {()=>{this.checkPassword}} 
 					/><br />
 					<TextField
       					hintText="Email"
@@ -105,18 +107,36 @@ class CreateProfile extends Component{
          				onCheck={this.updateFhistory.bind(this)}
           				style={styles.checkbox}
 					/>
+					<SelectField
+          				floatingLabelText="Select Gender"
+          				value={this.state.value}
+          				onChange={this.changeGender}
+        				>
+          				<MenuItem value={1} primaryText="Male" />
+          				<MenuItem value={2} primaryText="Female" />
+        				</SelectField><br />
 					<RaisedButton
 					label="Create Profile"
      		 			labelPosition="before"
       					style={styles.button}
       					containerElement="label"
-					onClick={this.sendtodb({username:this.state.username, password:this.state.password,email:this.state.email,bday:this.state.birthday,phist:this.state.phistory,fhist:this.state.fhistory})}
-					/>
+					onClick={this.sendtodb({username:this.state.username, password:this.state.password,email:this.state.email,bday:this.state.birthday,phist:this.state.personal_history,family_hist:this.state.fhistory,gender:this.state.gender})}
+					/><br/>
+					<br/>
+					<RaisedButton
+					label="Back to Start"
+					labelPosition="before"
+					style={styles.button}
+					containerElement='label'
+					onClick={()=>{this.props.onScreenChange('startscreen', '')}}
+					/><br/>
  				</div>	
 			</MuiThemeProvider>	
 		);		
 	}	
 }
+var api = axios.create({baseURL:'http://67.159.88.37:8000'});
+
 const styles = {
   block: {
     maxWidth: 250,

@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "react-native-grid-list": "^1.0.6"
+    "react-native-grid-list": "^1.0.6",
+    "react-password-mask": "^3.2.0"
   }
 }

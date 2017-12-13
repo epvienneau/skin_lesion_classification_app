@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
 import Image from 'react-image-file';
@@ -9,9 +8,9 @@ import DropzoneComponent from 'react-dropzone-component';
 import { UploadField } from '@navjobs/upload';
 
 class Upload extends Component{
-	constructor(){
-		super();
-		this.state={image:'',malignant:'.6',benign:'.4',color:'blue',imname: ''}
+	constructor(props){
+		super(props);
+		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: ''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -27,8 +26,10 @@ class Upload extends Component{
 		var imstring = JSON.stringify({'image':this.state.image})
 		api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
-		api.post('/uploadimage',{'imname':this.state.imname, 'username': 'Pablo'})//We need to make this so that there is a user logged in (like there is in the react native
-			.then((data) => console.log(data.data))
+			.then(() =>
+	api.post('/uploadimage',
+		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})//We need to make this so that there is a user logged in (like there is in the react native
+					.then((data) => console.log(data.data)))
 	}
 	onUpload = (files) => {
 		const reader = new FileReader()
@@ -36,37 +37,40 @@ class Upload extends Component{
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
 			console.log(file);
-			this.setState({image: reader.result, imname: file.name});
+			this.setState({image: reader.result});
 		}
 	}
 	parseData = (data) => {
 		var mal = data['malignant']
 		var ben = data['non malignant']
 		this.setState({malignant: mal, benign: ben});
+		this.setState({impath: data['impath']})
 	}
 	render(){
 		
 		return(
-			<div>
-	
 				<MuiThemeProvider>
-					
-					<RaisedButton
+						<div>
+						<header className="App-header">
+                   				 <h1 className="App-title">Upload an Image</h1>
+        					</header> <br />
+	    					</div>	
+					<center><RaisedButton
 					label="Get Prediction"
      					labelPosition="before"
       					style={styles.button}
 					onClick={() => this.getPrediction(this.state.image)}
       					containerElement="label"
-   					/>	
+   					/></center>	
 				<UploadField onFiles={this.onUpload}>
 					<div>
 						<MuiThemeProvider>
-							<RaisedButton
+							<center><RaisedButton
       							label="Choose an Image"
      							labelPosition="before"
       							style={styles.button}
       							containerElement="label"
-   							/>
+   							/></center>
 						</MuiThemeProvider>
 					</div>
 				</UploadField>
@@ -80,7 +84,7 @@ class Upload extends Component{
 				<p> Percent Benign {this.state.benign}</p>
 				</center>
 				</MuiThemeProvider>
-			</div>
+	
 		)
 	}
 }

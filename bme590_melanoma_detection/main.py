@@ -35,6 +35,7 @@ class ImPath(db.Model):
     username = db.Column(db.String(80), unique=False, nullable=False)
     impath = db.Column(db.String(200), unique=True, nullable=False)
     date = db.Column(db.DateTime, unique=False, default=datetime.utcnow)
+    pred = db.Column(db.String(80), unique=False, nullable=False)
     #tag = db.Column(db.String(200), unique=False, nullable=True)
     #diam = db.Column(db.DECIMAL(4), unique=False, nullable=True)
 
@@ -85,7 +86,11 @@ def get_images(username):
     """
     resp = []
     for image in ImPath.query.filter_by(username=username):
-        resp.append(image.impath)
+        with open(image.impath, 'r') as f:
+            im = f.read()
+        im = 'data:image/png;base64,' + im.encode('base64')
+        pred = image.pred
+        resp.append({'image': im, 'prediction': pred})
     return json.dumps(resp)
 
 
@@ -135,17 +140,16 @@ def display_thumbnail(verbose):
 @app.route('/uploadimage', methods=['POST'])
 def upload_image():
     req = request.json
-    impath = 'bme590_melanoma_detection/images/' ## CHANGE THIS TO THE LOCAL ADDRESS WHERE IMAGES ARE STORED
-    im_path = impath + req['imname']
-
+    im_path = req['impath']
     new_image = ImPath(username = req['username'],
-                    impath = im_path)
+                    impath = im_path,
+                       pred = req['pred'])
     try:
         db.session.add(new_image)
         db.session.commit()
     except:
-        return 'Error in uploading image'
-    return 'Hi'
+        return 'Failed to save the image'
+    return 'Success'
 
 @app.route('/prediction', methods=['POST'])
 def prediction():
@@ -158,12 +162,17 @@ def prediction():
     req = request.json
     image = req['image'][23:]
     imgdata = base64.b64decode(image)
-    filename = 'some_image.jpg'
-    with open(filename, 'wb') as f:
+    try:
+        filename = 'images/some_image' + \
+                   str(ImPath.query.order_by(ImPath.id.desc()).first().id + 1) + \
+                   '.jpg'
+    except:
+        filename = 'images/some_image1.jpg'
+    with open(filename, 'w') as f:
         f.write(imgdata)
-    image64 = mpl.imread('some_image.jpg')
+    image64 = mpl.imread(filename)
     resp = get_prediction(image64)
-    dictout = {resp[0][0]:str(resp[1][0]),resp[0][1]:str(resp[1][1])}
+    dictout = {resp[0][0]:str(resp[1][0]), resp[0][1]:str(resp[1][1]), 'impath': filename}
     return jsonify(dictout)
 
 def send_error(message, code): #Suyash error function
