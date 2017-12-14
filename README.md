@@ -7,3 +7,8 @@ The goal of this project is to make melanoma screening more accessible to patien
 RFC Comment-only link: https://docs.google.com/document/d/1YPVr7B2xX29EV3QD4q2QVrX84_vOlj1u1hufQdR3Ynk/edit?usp=sharing
 
 Final Write up Comment-only link: https://docs.google.com/document/d/1UE3clAn0-0bLuTypAbeG4H2oUAT5qC4GAl8SSEACAXU/edit?usp=sharing
+
+Demo Videos:
+ - Creating a new profile: https://drive.google.com/file/d/1KvP7Xcdn_k9nVfkuF44mXS2YqCr36paz/view?usp=sharing
+ - Existing user uploading photo, getting prediction and looking at history : https://drive.google.com/file/d/1KWP0mYu4DV6YSNkQn7kykuUsfJkGDwqK/view?usp=sharing
+ --> diclaimer, the malignant images shown on julia's  friend's profile are from us testing, she does not actually have lesions like that (she wated you to know)
