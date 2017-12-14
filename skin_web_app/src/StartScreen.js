@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import axios from 'axios';
+
 class StartScreen extends Component {
   constructor(props) {
     super(props);
@@ -12,12 +12,12 @@ class StartScreen extends Component {
     this.setState({
       username: event.target.value,
     });
-  }
+  };
   changePassword = (event) => {
     this.setState({
       password: event.target.value,
     });
-  }
+  };
   checklogin = () =>{
     if (this.state.username != undefined)
     {
@@ -38,7 +38,7 @@ class StartScreen extends Component {
     else{
         Screen.setState({valid: 'Please input a username'})
     }
-} 
+};
 
   render(){
     return(
