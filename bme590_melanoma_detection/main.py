@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 count_requests = 0
 CORS(app)
 
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
@@ -37,13 +38,16 @@ class ImPath(db.Model):
     impath = db.Column(db.String(200), unique=True, nullable=False)
     date = db.Column(db.DateTime, unique=False, default=datetime.utcnow)
     pred = db.Column(db.String(80), unique=False, nullable=False)
-    #tag = db.Column(db.String(200), unique=False, nullable=True)
-    #diam = db.Column(db.DECIMAL(4), unique=False, nullable=True)
+
+    # tag = db.Column(db.String(200), unique=False, nullable=True)
+    # diam = db.Column(db.DECIMAL(4), unique=False, nullable=True)
 
     def __repr__(self):
         return '<Image %r>' % self.id
 
+
 db.create_all()
+
 
 @app.route('/', methods=['GET'])
 def requests():
@@ -58,6 +62,7 @@ def requests():
     resp = jsonify(count_requests)
     return resp
 
+
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
     """
@@ -69,7 +74,7 @@ def checklogin():
     username = request.json['username']
     password = request.json['password']
 
-    #Check if username is valid
+    # Check if username is valid
     if db.session.query(User.username).filter_by(username=username).scalar() is None:
         send_error('Username doesn''t exist', 404)
         return 'This Username does not exist, try creating it!'
@@ -79,7 +84,8 @@ def checklogin():
         return 'Wrong Password'
     return 'YES'
 
-@app.route('/getImages/<username>', methods = ['GET'])
+
+@app.route('/getImages/<username>', methods=['GET'])
 def get_images(username):
     """
 
@@ -106,7 +112,8 @@ def create_new_profile():
 
     Adds new user to DB
 
-    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
+    return: resp: (json) username, email, password, DOB, sex,
+    family history of melanoma, personal history of melanoma
     """
     req = request.json
     new_user = User(username = req['username'],
@@ -133,23 +140,26 @@ def update_profile(username):
 
     Updates profile of user associated with given username
 
-    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
+    return: resp: (json) username, email, password, DOB, sex,
+    family history of melanoma, personal history of melanoma
     """
 '''
+
 
 @app.route('/uploadimage', methods=['POST'])
 def upload_image():
     req = request.json
     im_path = req['impath']
-    new_image = ImPath(username = req['username'],
-                    impath = im_path,
-                       pred = req['pred'])
+    new_image = ImPath(username=req['username'],
+                       impath=im_path,
+                       pred=req['pred'])
     try:
         db.session.add(new_image)
         db.session.commit()
         return 'Saved the image'
     except:
         send_error('Failed to save the image', 418) 
+
 
 @app.route('/prediction', methods=['POST'])
 def prediction():
@@ -178,6 +188,7 @@ def prediction():
         send_error('Invalid image data', 415)
     return jsonify(dictout)
 
-def send_error(message, code): #Suyash error function
-    err = {"error": message,}
+
+def send_error(message, code):  # Suyash error function
+    err = {"error": message, }
     return jsonify(err), code

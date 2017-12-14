@@ -6,25 +6,24 @@ import HomeScreen from './HomeScreen';
 import Upload from './Upload';
 import axios from 'axios';
 
-var api = axios.create({
+const api = axios.create({
     baseURL:'http://vcm-1845.vm.duke.edu:8000'
     });
 
 const START_SCREEN = 'startscreen';
 const UPLOAD = 'upload';
 const HOME_SCREEN = 'homescreen';
-const EDIT_PROFILE = 'edit-profile';
 const CREATE_PROFILE = 'create-profile';
 
 class App extends Component {
   state = {
     currentScreen:START_SCREEN,
     username:''
-  } 
+  };
 
   onScreenChange = (screenID, username) => {
     this.setState({currentScreen:screenID, username:username, api:api});
-  }
+  };
 
   render() {
     if (this.state.currentScreen === START_SCREEN){

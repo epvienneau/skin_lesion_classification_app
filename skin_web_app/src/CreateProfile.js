@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import TextField from 'material-ui/TextField';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import DatePicker from 'material-ui/DatePicker';
 import Checkbox from 'material-ui/Checkbox';
 import RaisedButton from 'material-ui/RaisedButton';
-import axios from 'axios';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 class CreateProfile extends Component{
@@ -17,55 +15,59 @@ class CreateProfile extends Component{
     		this.setState({
       		username: event.target.value,
     		});
- 		}
+ 		};
 		changePassword= (event) => {
     		this.setState({
       		password: event.target.value,
     		});	
- 		}
+ 		};
 		changeEmail= (event) => {
     		this.setState({
       		email: event.target.value,
     		});	
- 		}
+ 		};
 		confirmpword = (event) =>{
 			this.setState({confpassword:event.target.value});
-		}
+		};
 		checkPassword= (conf) => {
-    		
-      			var checker = conf
-    			if (checker !== this.state.password) {
+    			if (conf !== this.state.password) {
 				alert("Passwords must match");
 			}
-		}
+		};
 		setBday = (event,date) => {
 			this.setState({
 			birthday:date,
 			});
-		}
+		};
 		updatePhistory() {
     			this.setState((oldState) => {
       				return {
         			phistory: !oldState.phistory,
       				};
     			});
-  		}
+  		};
 		updateFhistory() {
     			this.setState((oldState) => {
       				return {
         			fhistory: !oldState.fhistory,
       				};
     			});
-  		}
+  		};
 		sendtodb= (dat) =>{
 			if (String(this.state.password)===(String(this.state.confpassword))){
                     this.state.api.post('/create_new_profile', dat)
-                        .then(() => {this.props.onScreenChange('homescreen', this.state.username)})
+                        .then((data) =>
+					{if (data.data == 'Success') {
+                    	this.props.onScreenChange('homescreen', this.state.username)
+                    }
+                    else {
+                    	alert("Username already Exist")
+					}})
 			}
 			else{
 				alert("Passwords must match")
 			}
-		}
+		};
 		
 		changeGender=(event,index,value)=>
 			this.setState({gender:value});
