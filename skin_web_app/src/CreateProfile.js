@@ -80,7 +80,7 @@ class CreateProfile extends Component{
 					<header className="App-header">
                     			<h1 className="App-title">Create Profile</h1>
         				</header>
-					<TextField
+				<center><TextField
       					hintText="Username"
 					    value={this.state.username}
     					onChange= {this.changeUsername} 
@@ -141,7 +141,7 @@ class CreateProfile extends Component{
 					style={styles.button}
 					containerElement='label'
 					onClick={()=>{this.props.onScreenChange('startscreen', '')}}
-					/><br/>
+					/><br/> </center>
  				</div>	
 			</MuiThemeProvider>	
 		);		
