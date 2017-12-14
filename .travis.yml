@@ -1,7 +1,10 @@
 language: python
+
 sudo: required
+
 services:
-  - docker
+  -docker
+
 python:
   - 3.6
 install:
@@ -15,5 +18,5 @@ install:
   - docker-compose build
   - docker-compose up -d
 # Activate your environment NOTE: Change ci-test to the name of your environment in environment.yml
- script:
+script:
   - docker exec -it server_1 py.test test_validate.py 
