@@ -44,19 +44,6 @@ class ImPath(db.Model):
 
 db.create_all()
 
-@app.route('/', methods=['GET'])
-def requests():
-    """
-    
-    Returns the number of requests
-
-    :return: resp: (int) the number of requests
-    """
-    global count_requests
-    count_requests += 1
-    resp = jsonify(count_requests)
-    return resp
-
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
     """
@@ -101,9 +88,9 @@ def get_images(username):
 def create_new_profile():
     """
 
-    Adds new user to DB
+    Adds new user to DB from the input given by the frontend
 
-    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
+    :return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
     """
     req = request.json
     new_user = User(username = req['username'],
@@ -120,17 +107,15 @@ def create_new_profile():
     #    raise ValueError('Error, User with that username or password might already exist')
     return 'Hi'
 
-@app.route('/update_profile/<username>', methods=['POST'])
-def update_profile(username):
-    """
-
-    Updates profile of user associated with given username
-
-    return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
-    """
 
 @app.route('/uploadimage', methods=['POST'])
 def upload_image():
+    '''
+
+    Stores image in the Database
+
+    :return: string: 'Success' if stored properly
+    '''
     req = request.json
     im_path = req['impath']
     new_image = ImPath(username = req['username'],
@@ -147,9 +132,9 @@ def upload_image():
 def prediction():
     """
 
-    Sends image and associated data (tag, date, diameter) to DB 
+    Decodes input image from patient and gets prediction results
 
-    return: resp: (json)
+    :return: json: dictionary with predictinon results and image path
     """
     req = request.json
     image = req['image'][23:]
