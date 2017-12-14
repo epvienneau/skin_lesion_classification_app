@@ -65,16 +65,16 @@ class StartScreen extends Component {
 		<div style={{fontSize: 10, fontFamily: 'Verdana', color: 'red'}}>
             {this.state.valid}
         </div></center>
-		<RaisedButton
+	<center><RaisedButton
 	    label="Log In"
       	    labelPosition="before"
       	    style={styles.button}
-	    onClick={() => {this.checklogin(this.state.api,this.state.username)}}/>
-	    <RaisedButton
+	    onClick={() => {this.checklogin(this.state.api,this.state.username)}}/> <br/></center>
+	    <center><RaisedButton
 	    label="Create Profile"
       	    labelPosition="before"
       	    style={styles.button}
-	    onClick={() => {this.props.onScreenChange('create-profile', this.state.username)}}/>
+	    onClick={() => {this.props.onScreenChange('create-profile', this.state.username)}}/></center>
 	</MuiThemeProvider>
   
     )
