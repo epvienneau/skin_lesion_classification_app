@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
+import Image from 'react-image-file';
+import axios from 'axios';
+import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import DropzoneComponent from 'react-dropzone-component';
 import { UploadField } from '@navjobs/upload';
 
 class Upload extends Component{
 	constructor(props){
 		super(props);
-		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: '', api:this.props.api}
+		this.state={username:this.props.username,image:'',malignant:'',benign:'',color:'blue',impath: '', api:this.props.api, diam: '', usertag:'',datecap:''}
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
@@ -24,7 +29,7 @@ class Upload extends Component{
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
 			.then(() =>
 	this.state.api.post('/uploadimage',
-		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})//We need to make this so that there is a user logged in (like there is in the react native
+		{'impath':this.state.impath, 'username': this.state.username, 'pred': this.state.malignant})
 					.then((data) => console.log(data.data)))
 	}
 	onUpload = (files) => {
@@ -41,23 +46,35 @@ class Upload extends Component{
 		const ben = data['non malignant'];
 		this.setState({malignant: mal, benign: ben});
 		this.setState({impath: data['impath']})
+	}
+	changeDiam = (event) => {
+		this.setState({diam:event.target.value,
+		});
 	};
-	render(){
-		
+	changeTag = (event) => {
+		this.setState({usertag:event.target.value,
+		});
+	};
+	setDate = (event,date) =>{
+		this.setStaet({datecap: date,
+		});
+	};
+	render(){	
 		return(
 				<MuiThemeProvider>
-						<div>
+						<div>	
 						<header className="App-header">
                    				 <h1 className="App-title">Upload an Image</h1>
         					</header> <br />
 	    					</div>	
 					<center><RaisedButton
-					label="Get Prediction"
+					label="Home"
      					labelPosition="before"
       					style={styles.button}
-					onClick={() => this.getPrediction(this.state.image)}
+					onClick={() =>this.props.onScreenChange('homescreen',this.state.username)}
       					containerElement="label"
-   					/></center>	
+   					/></center>
+				
 				<UploadField onFiles={this.onUpload}>
 					<div>
 						<MuiThemeProvider>
@@ -70,22 +87,42 @@ class Upload extends Component{
 						</MuiThemeProvider>
 					</div>
 				</UploadField>
+				<center><p> If you are on a computer please upload a .jpg or .jpeg file</p></center>
+				<center><p> If you are on a phone you are good to go!</p></center>
 				<center>
-				<div style={{backgroundColor: this.state.color,width:'200px', 
-							height:'200px'}}>
-				
+				<div>
 				<img src={this.state.image} width="90" height="90"/>
-				</div>		
+				</div>
+				<MuiThemeProvider>
+							<center><TextField
+								id="Diameter"
+								hintText="Diameter of Lesion"
+								value={this.state.diam}
+								onChange={this.changeDiam}
+							/></center>
+							<center><TextField
+								id="Tag"
+								hintText="What Lesion is It?"
+								value={this.state.usertag}
+								onChange={this.changeTag}
+							/></center>
+							<center><DatePicker
+								hintText="Date Captured"
+								value={this.state.datecap}
+								onChange={this.setDate}
+							/></center>
+
+				</MuiThemeProvider>	
 				<p> Probability Malignant {this.state.malignant}</p>
 				<p> Probability Benign {this.state.benign}</p>
-				</center>
+				</center>	
 				<MuiThemeProvider>
 							<center><RaisedButton
-      							label="Home"
+      							label="Get Prediction"
      							labelPosition="before"
       							style={styles.button}
       							containerElement="label"
-							onClick={()=>this.props.onScreenChange('homescreen',this.state.username)}
+							onClick={()=>this.getPrediction(this.state.image)}
    							/></center>
 						</MuiThemeProvider>
 
