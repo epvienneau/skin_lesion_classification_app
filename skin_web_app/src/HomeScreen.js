@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import {GridList, GridTile} from 'material-ui/GridList';
-import axios from 'axios';
 
 class HomeScreen extends Component{
   constructor(props){
@@ -15,7 +11,7 @@ class HomeScreen extends Component{
   }
 
   render(){
-  var api = this.props.api
+  const api = this.props.api;
 return(
 	<MuiThemeProvider>
 	 <div>
