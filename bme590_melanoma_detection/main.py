@@ -100,7 +100,7 @@ def get_images(username):
             pred = image.pred
             resp.append({'image': im, 'prediction': pred})
         else:
-            return send_error('Invalid image pathway', 410)
+            return 'Invalid image pathway'
     return json.dumps(resp)
 
 
@@ -122,7 +122,6 @@ def create_new_profile():
                     email = req['email'],
                     bday = req['bday'][0:10])
     if (db.session.query(User.username).filter_by(username=req['username']).scalar() is not None):
-	print(db.session.query(User.username).filter_by(username=req['username']).scalar())
         return 'Error, User with that username or password already exists'
     elif (not is_valid_email_address(req['email'])):
         return 'Are you sure this is a valid email address?'
@@ -164,7 +163,7 @@ def upload_image():
         db.session.commit()
         return 'Saved the image'
     except:
-        return send_error('Failed to save the image', 418) 
+        return 'Failed to save the image'
 
 
 @app.route('/prediction', methods=['POST'])
@@ -191,7 +190,7 @@ def prediction():
         resp = get_prediction(image64)
         dictout = {resp[0][0]:str(resp[1][0]), resp[0][1]:str(resp[1][1]), 'impath': filename}
     else:
-        return send_error('Invalid image data', 415)
+        return 'Invalid image data'
     return jsonify(dictout)
 
 
