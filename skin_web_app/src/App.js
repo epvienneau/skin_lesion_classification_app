@@ -7,7 +7,7 @@ import Upload from './Upload';
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL:'http://vcm-1845.vm.duke.edu'
+    baseURL:'http://vcm-1845.vm.duke.edu:8000'
     });
 
 const START_SCREEN = 'startscreen';
