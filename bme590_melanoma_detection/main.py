@@ -7,6 +7,7 @@ import json
 from get_prediction import get_prediction
 import matplotlib.pyplot as mpl
 import base64
+from validate import is_valid_image_string, check_passwords, is_valid_image_path, is_valid_email_address
 
 app = Flask(__name__)
 
@@ -51,6 +52,7 @@ db.create_all()
 @app.route('/', methods=['GET'])
 def requests():
     """
+    
     Returns the number of requests
 
     :return: resp: (int) the number of requests
@@ -67,7 +69,7 @@ def checklogin():
     
     Returns string that will get assigned to variable 'valid' in react code
 
-    :return: (String) 'YES' if login credentials are valid
+    :return: (String) 'Valid credentials' if login credentials are valid
     """
     username = request.json['username']
     password = request.json['password']
@@ -75,12 +77,10 @@ def checklogin():
     # Check if username is valid
     if db.session.query(User.username).filter_by(username=username).scalar() is None:
         return 'This Username does not exist, try creating it!'
-    # Check if the password is the same
-    if User.query.filter_by(username=username).first().password != password:
-        print(password)
-        print(User.query.filter_by(username=username).first().password)
+    #Check if the password is the same
+    if (not check_passwords(User.query.filter_by(username=username).first().password, password)): 
         return 'Wrong Password'
-    return 'YES'
+    return 'Valid credentials'
 
 
 @app.route('/getImages/<username>', methods=['GET'])
@@ -93,11 +93,14 @@ def get_images(username):
     """
     resp = []
     for image in ImPath.query.filter_by(username=username):
-        with open(image.impath, 'r') as f:
-            im = f.read()
-        im = 'data:image/png;base64,' + im.encode('base64')
-        pred = image.pred
-        resp.append({'image': im, 'prediction': pred})
+        if (is_valid_image_path(image.impath)):
+            with open(image.impath, 'r') as f:
+                im = f.read()
+            im = 'data:image/png;base64,' + im.encode('base64')
+            pred = image.pred
+            resp.append({'image': im, 'prediction': pred})
+        else:
+            return send_error('Invalid image pathway', 410)
     return json.dumps(resp)
 
 
@@ -111,7 +114,6 @@ def create_new_profile():
     family history of melanoma, personal history of melanoma
     """
     req = request.json
-<<<<<<< HEAD
     new_user = User(username = req['username'],
                     password = req['password'],
                     personal_history = req['personal_history'],
@@ -119,16 +121,18 @@ def create_new_profile():
                     gender = req['gender'],
                     email = req['email'],
                     bday = req['bday'][0:10])
-    try:
-        db.session.add(new_user)  
-        db.session.commit()
-    except:
-        print('Error')
-        return 'Error, User with that username or password might already exist'
-    return 'Success'
+    if (db.session.query(User.username).filter_by(username=username).scalar() is not None):
+        return send_error('Error, User with that username or password already exists', 409)
+    elif (!is_valid_email_address(req['email'])):
+        return send_error('Are you sure this is a valid email address?', 400)
+    else:
+        db.session.add(new_user)
+        db.session.commit() 
+        return 'Created Profile'
 
+# Commented out this endpoint for now because we currently don't have an update profile component in the web app
 
-
+'''
 @app.route('/update_profile/<username>', methods=['POST'])
 def update_profile(username):
     """
@@ -138,6 +142,7 @@ def update_profile(username):
     return: resp: (json) username, email, password, DOB, sex,
     family history of melanoma, personal history of melanoma
     """
+'''
 
 
 @app.route('/uploadimage', methods=['POST'])
@@ -156,9 +161,9 @@ def upload_image():
     try:
         db.session.add(new_image)
         db.session.commit()
+        return 'Saved the image'
     except:
-        return 'Failed to save the image'
-    return 'Success'
+        return send_error('Failed to save the image', 418) 
 
 
 @app.route('/prediction', methods=['POST'])
@@ -171,18 +176,21 @@ def prediction():
     """
     req = request.json
     image = req['image'][23:]
-    imgdata = base64.b64decode(image)
-    try:
-        filename = 'images/some_image' + \
+    if (is_valid_image_string(image)):
+        imgdata = base64.b64decode(image) 
+        try:
+            filename = 'images/some_image' + \
                    str(ImPath.query.order_by(ImPath.id.desc()).first().id + 1) + \
                    '.jpg'
-    except:
-        filename = 'images/some_image1.jpg'
-    with open(filename, 'w') as f:
-        f.write(imgdata)
-    image64 = mpl.imread(filename)
-    resp = get_prediction(image64)
-    dictout = {resp[0][0]: str(resp[1][0]), resp[0][1]: str(resp[1][1]), 'impath': filename}
+        except:
+            filename = 'images/some_image1.jpg'
+        with open(filename, 'w') as f:
+            f.write(imgdata)
+        image64 = mpl.imread(filename)
+        resp = get_prediction(image64)
+        dictout = {resp[0][0]:str(resp[1][0]), resp[0][1]:str(resp[1][1]), 'impath': filename}
+    else:
+        return send_error('Invalid image data', 415)
     return jsonify(dictout)
 
 
