@@ -7,6 +7,7 @@ import json
 from get_prediction import get_prediction
 import matplotlib.pyplot as mpl
 import base64
+from validate import is_valid_image_string
 
 app = Flask(__name__)
 
@@ -118,6 +119,8 @@ def create_new_profile():
     #    raise ValueError('Error, User with that username or password might already exist')
     return 'Hi'
 
+# Commented out this endpoint for now because we currently don't have an update profile component in the web app
+'''
 @app.route('/update_profile/<username>', methods=['POST'])
 def update_profile(username):
     """
@@ -126,6 +129,7 @@ def update_profile(username):
 
     return: resp: (json) username, email, password, DOB, sex, family history of melanoma, personal history of melanoma, email preferences
     """
+'''
 
 @app.route('/uploadimage', methods=['POST'])
 def upload_image():
@@ -151,7 +155,10 @@ def prediction():
     """
     req = request.json
     image = req['image'][23:]
-    imgdata = base64.b64decode(image)
+    if (is_valid_image_string(image))
+        imgdata = base64.b64decode(image)
+    else
+        return 'Invalid image data'
     try:
         filename = 'images/some_image' + \
                    str(ImPath.query.order_by(ImPath.id.desc()).first().id + 1) + \
