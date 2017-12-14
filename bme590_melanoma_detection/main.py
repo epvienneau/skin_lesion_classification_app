@@ -123,7 +123,7 @@ def create_new_profile():
                     bday = req['bday'][0:10])
     if (db.session.query(User.username).filter_by(username=username).scalar() is not None):
         return send_error('Error, User with that username or password already exists', 409)
-    elif (!is_valid_email_address(req['email'])):
+    elif (not is_valid_email_address(req['email'])):
         return send_error('Are you sure this is a valid email address?', 400)
     else:
         db.session.add(new_user)
