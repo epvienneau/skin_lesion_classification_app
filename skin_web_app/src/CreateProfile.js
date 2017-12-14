@@ -60,7 +60,13 @@ class CreateProfile extends Component{
 		sendtodb= (dat) =>{
 			if (String(this.state.password)===(String(this.state.confpassword))){
                     this.state.api.post('/create_new_profile', dat)
-                        .then(() => {this.props.onScreenChange('homescreen', this.state.username)})
+                        .then((data) =>
+					{if (data.data == 'Success') {
+                    	this.props.onScreenChange('homescreen', this.state.username)
+                    }
+                    else {
+                    	alert("Username already Exist")
+					}})
 			}
 			else{
 				alert("Passwords must match")
