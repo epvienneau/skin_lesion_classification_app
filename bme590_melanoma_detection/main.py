@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-import numpy as np
+import numpy as np 
 from datetime import datetime
 import json
 from get_prediction import get_prediction
@@ -121,10 +121,11 @@ def create_new_profile():
                     gender = req['gender'],
                     email = req['email'],
                     bday = req['bday'][0:10])
-    if (db.session.query(User.username).filter_by(username=username).scalar() is not None):
-        return send_error('Error, User with that username or password already exists', 409)
-    elif (!is_valid_email_address(req['email'])):
-        return send_error('Are you sure this is a valid email address?', 400)
+    if (db.session.query(User.username).filter_by(username=req['username']).scalar() is not None):
+	print(db.session.query(User.username).filter_by(username=req['username']).scalar())
+        return 'Error, User with that username or password already exists'
+    elif (not is_valid_email_address(req['email'])):
+        return 'Are you sure this is a valid email address?'
     else:
         db.session.add(new_user)
         db.session.commit() 
