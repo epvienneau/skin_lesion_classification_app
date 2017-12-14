@@ -110,19 +110,22 @@ def create_new_profile():
     family history of melanoma, personal history of melanoma
     """
     req = request.json
-    new_user = User(username=req['username'],
-                    password=req['password'],
-                    personal_history=req['personal_history'],
-                    family_history=req['family_history'],
-                    gender=req['gender'],
-                    email=req['email'],
-                    bday=req['bday'][0:10])
-    # try:
-    db.session.add(new_user)
-    db.session.commit()
-    # except:
-    #    raise ValueError('Error, User with that username or password might already exist')
-    return 'Hi'
+<<<<<<< HEAD
+    new_user = User(username = req['username'],
+                    password = req['password'],
+                    personal_history = req['personal_history'],
+                    family_history = req['family_history'],
+                    gender = req['gender'],
+                    email = req['email'],
+                    bday = req['bday'][0:10])
+    try:
+        db.session.add(new_user)  
+        db.session.commit()
+    except:
+        print('Error')
+        return 'Error, User with that username or password might already exist'
+    return 'Success'
+
 
 
 @app.route('/update_profile/<username>', methods=['POST'])

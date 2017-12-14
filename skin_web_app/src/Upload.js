@@ -76,8 +76,8 @@ class Upload extends Component{
 				
 				<img src={this.state.image} width="90" height="90"/>
 				</div>		
-				<p> Percent Malignant {this.state.malignant}</p>
-				<p> Percent Benign {this.state.benign}</p>
+				<p> Probability Malignant {this.state.malignant}</p>
+				<p> Probability Benign {this.state.benign}</p>
 				</center>
 				<MuiThemeProvider>
 							<center><RaisedButton
