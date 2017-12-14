@@ -57,7 +57,7 @@ class CreateProfile extends Component{
 			if (String(this.state.password)===(String(this.state.confpassword))){
                     this.state.api.post('/create_new_profile', dat)
                         .then((data) =>
-					{if (data.data == 'Success') {
+					{if (data.data == 'Saved the image') {
                     	this.props.onScreenChange('homescreen', this.state.username)
                     }
                     else {
