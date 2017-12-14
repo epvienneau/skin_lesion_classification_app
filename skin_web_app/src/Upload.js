@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import RaisedButton from 'material-ui/RaisedButton';
-import Image from 'react-image-file';
-import axios from 'axios';
- 
-import DropzoneComponent from 'react-dropzone-component';
 import { UploadField } from '@navjobs/upload';
 
 class Upload extends Component{
@@ -14,16 +10,16 @@ class Upload extends Component{
 	}
 	uploadFile = (event) => {
 		this.setState({image:event.target.value});
-		console.log(this.state.image)
+		console.log(this.state.image);
 		if (parseInt(this.state.malignant)>0.5){
 			this.setState({color:'red'})
 		}
 			else{
 				this.setState({color:'green'})}
-	}
+	};
     getPrediction(){
-		console.log('hi')
-		var imstring = JSON.stringify({'image':this.state.image})
+		console.log('hi');
+		const imstring = JSON.stringify({'image':this.state.image});
 		this.state.api.post('/prediction',{'image':this.state.image})
 			.then((data)=>{this.parseData(data.data), console.log(data.data)})
 			.then(() =>
@@ -32,20 +28,20 @@ class Upload extends Component{
 					.then((data) => console.log(data.data)))
 	}
 	onUpload = (files) => {
-		const reader = new FileReader()
-		const file = files[0]
+		const reader = new FileReader();
+		const file = files[0];
 		reader.readAsDataURL(file);
 		reader.onloadend = () => {
 			console.log(file);
 			this.setState({image: reader.result});
 		}
-	}
+	};
 	parseData = (data) => {
-		var mal = data['malignant']
-		var ben = data['non malignant']
+		const mal = data['malignant'];
+		const ben = data['non malignant'];
 		this.setState({malignant: mal, benign: ben});
 		this.setState({impath: data['impath']})
-	}
+	};
 	render(){
 		
 		return(
