@@ -47,6 +47,7 @@ db.create_all()
 @app.route('/', methods=['GET'])
 def requests():
     """
+    
     Returns the number of requests
 
     :return: resp: (int) the number of requests
@@ -59,6 +60,7 @@ def requests():
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
     """
+    
     Returns string that will get assigned to variable 'valid' in react code
 
     :return: (String) 'YES' if login credentials are valid
