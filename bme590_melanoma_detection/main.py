@@ -69,20 +69,18 @@ def checklogin():
     
     Returns string that will get assigned to variable 'valid' in react code
 
-    :return: (String) 'YES' if login credentials are valid
+    :return: (String) 'Valid credentials' if login credentials are valid
     """
     username = request.json['username']
     password = request.json['password']
 
     # Check if username is valid
     if db.session.query(User.username).filter_by(username=username).scalar() is None:
-        send_error('Username doesn''t exist', 404)
         return 'This Username does not exist, try creating it!'
     #Check if the password is the same
-    if (!check_passwords(User.query.filter_by(username=username).first().password, password)): 
-        send_error('Passwords don''t match', 400)
+    if (not check_passwords(User.query.filter_by(username=username).first().password, password)): 
         return 'Wrong Password'
-    return 'YES'
+    return 'Valid credentials'
 
 
 @app.route('/getImages/<username>', methods=['GET'])
@@ -101,8 +99,8 @@ def get_images(username):
             im = 'data:image/png;base64,' + im.encode('base64')
             pred = image.pred
             resp.append({'image': im, 'prediction': pred})
-        else
-            send_error('Invalid image pathway', 410)
+        else:
+            return send_error('Invalid image pathway', 410)
     return json.dumps(resp)
 
 
@@ -124,15 +122,16 @@ def create_new_profile():
                     email = req['email'],
                     bday = req['bday'][0:10])
     if (db.session.query(User.username).filter_by(username=username).scalar() is not None):
-        send_error('Error, User with that username or password already exists', 409)
+        return send_error('Error, User with that username or password already exists', 409)
     elif (!is_valid_email_address(req['email'])):
-        send_error('Are you sure this is a valid email address?', 400)
-    else
+        return send_error('Are you sure this is a valid email address?', 400)
+    else:
         db.session.add(new_user)
         db.session.commit() 
         return 'Created Profile'
 
 # Commented out this endpoint for now because we currently don't have an update profile component in the web app
+
 '''
 @app.route('/update_profile/<username>', methods=['POST'])
 def update_profile(username):
@@ -158,7 +157,7 @@ def upload_image():
         db.session.commit()
         return 'Saved the image'
     except:
-        send_error('Failed to save the image', 418) 
+        return send_error('Failed to save the image', 418) 
 
 
 @app.route('/prediction', methods=['POST'])
@@ -171,7 +170,7 @@ def prediction():
     """
     req = request.json
     image = req['image'][23:]
-    if (is_valid_image_string(image))
+    if (is_valid_image_string(image)):
         imgdata = base64.b64decode(image) 
         try:
             filename = 'images/some_image' + \
@@ -184,8 +183,8 @@ def prediction():
         image64 = mpl.imread(filename)
         resp = get_prediction(image64)
         dictout = {resp[0][0]:str(resp[1][0]), resp[0][1]:str(resp[1][1]), 'impath': filename}
-    else
-        send_error('Invalid image data', 415)
+    else:
+        return send_error('Invalid image data', 415)
     return jsonify(dictout)
 
 
