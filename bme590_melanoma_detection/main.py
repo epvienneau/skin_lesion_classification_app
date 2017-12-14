@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-import numpy as np
+import numpy as np 
 from datetime import datetime
 import json
 from get_prediction import get_prediction
