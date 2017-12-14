@@ -31,6 +31,7 @@ def load_graph(model_file):
     graph = tf.Graph()
     graph_def = tf.GraphDef()
 
+
     with open(model_file, "rb") as f:
         graph_def.ParseFromString(f.read())
     with graph.as_default():
@@ -50,7 +51,6 @@ def read_tensor(t, input_height=299, input_width=299,
     result = sess.run(normalized)
     return result
 
-
 def load_labels(label_file):
     label = []
     proto_as_ascii_lines = tf.gfile.GFile(label_file).readlines()
@@ -58,9 +58,16 @@ def load_labels(label_file):
         label.append(l.rstrip())
     return label
 
-
 # TODO: cleanup and docs
 def get_prediction(image_matrix):
+    """
+ 
+    Reads in image data (in the form of an ndarray) and feeds image into neural network to receive a melanoma prediction (benign or malignant)
+ 
+    :return: labels: (array): ['non-malignant', 'malignant']
+    :return: results: (array): [% non-malingnant, % malignant] 
+    """
+
     model_file = "pretrained_inception_net/retrained_graph_2.pb"
     label_file = "pretrained_inception_net/retrained_labels.txt"
     input_height = 299
@@ -91,3 +98,4 @@ def get_prediction(image_matrix):
     labels = load_labels(label_file)
 
     return labels, results
+

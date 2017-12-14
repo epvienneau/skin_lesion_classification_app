@@ -64,6 +64,7 @@ def requests():
 @app.route('/checklogin', methods=['POST'])
 def checklogin():
     """
+    
     Returns string that will get assigned to variable 'valid' in react code
 
     :return: (String) 'YES' if login credentials are valid
@@ -104,9 +105,9 @@ def get_images(username):
 def create_new_profile():
     """
 
-    Adds new user to DB
+    Adds new user to DB from the input given by the frontend
 
-    return: resp: (json) username, email, password, DOB, sex,
+    :return: resp: (json) username, email, password, DOB, sex,
     family history of melanoma, personal history of melanoma
     """
     req = request.json
@@ -141,6 +142,12 @@ def update_profile(username):
 
 @app.route('/uploadimage', methods=['POST'])
 def upload_image():
+    '''
+
+    Stores image in the Database
+
+    :return: string: 'Success' if stored properly
+    '''
     req = request.json
     im_path = req['impath']
     new_image = ImPath(username=req['username'],
@@ -158,9 +165,9 @@ def upload_image():
 def prediction():
     """
 
-    Sends image and associated data (tag, date, diameter) to DB 
+    Decodes input image from patient and gets prediction results
 
-    return: resp: (json)
+    :return: json: dictionary with predictinon results and image path
     """
     req = request.json
     image = req['image'][23:]

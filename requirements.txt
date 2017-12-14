@@ -1,4 +1,9 @@
 Flask
+matplotlib
+tensorflow
+sphinx
+numpy
 mysqlclient
 ipython
 flask_sqlalchemy
+flask-cors
