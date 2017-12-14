@@ -31,7 +31,7 @@ class StartScreen extends Component {
                 )
             })
             .then(() => {
-                if (this.state.valid == 'YES') {
+                if (this.state.valid == 'Valid credentials') {
 			this.props.onScreenChange('homescreen', this.state.username)
             }})
    	 }
