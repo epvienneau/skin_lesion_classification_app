@@ -12,3 +12,6 @@ Demo Videos:
  - Creating a new profile: https://drive.google.com/file/d/1KvP7Xcdn_k9nVfkuF44mXS2YqCr36paz/view?usp=sharing
  - Existing user uploading photo, getting prediction and looking at history : https://drive.google.com/file/d/1KWP0mYu4DV6YSNkQn7kykuUsfJkGDwqK/view?usp=sharing
  --> diclaimer, the malignant images shown on julia's  friend's profile are from us testing, she does not actually have lesions like that (she wanted you to know)
+
+
+![Alt Text](https://travis-ci.org/epvienneau/skin_lesion_classification_app.svg?branch=master)
