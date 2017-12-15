@@ -4,3 +4,4 @@ MySQL-Python
 mysqlclient
 ipython
 flask_sqlalchemy
+pytest

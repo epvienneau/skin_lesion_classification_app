@@ -56,7 +56,7 @@ class Upload extends Component{
 		});
 	};
 	setDate = (event,date) =>{
-		this.setStaet({datecap: date,
+		this.setState({datecap: date,
 		});
 	};
 	render(){	
