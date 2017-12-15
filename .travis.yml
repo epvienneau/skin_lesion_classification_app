@@ -13,4 +13,4 @@ install:
   - docker-compose up -d
 # Activate your environment NOTE: Change ci-test to the name of your environment in environment.yml
 script:
-  - docker exec -it server_1 py.test test_validate.py
+  - docker exec -it bme590melanomadetection_server_1 py.test test_validate.py
